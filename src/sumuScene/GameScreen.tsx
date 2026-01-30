@@ -1,6 +1,7 @@
 import { useState } from "react";
 import GameContext from "../utils/GameContext";
 import type { MaskType } from "../utils/types";
+import LevelScreen from "./LevelScreen";
 import MaskButtons from "./MaskButtons";
 
 export default function GameScreen() {
@@ -18,6 +19,7 @@ export default function GameScreen() {
   return (
     <GameContext.Provider value={{ mask, setMask, stage, stageUp, stageDown }}>
       <MaskButtons />
+      <LevelScreen />
       <div>
         <p>Morjesta pöytään</p>
       </div>
