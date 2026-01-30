@@ -10,31 +10,60 @@ export default function Test() {
   const height: number = 15;
   const [player, setPlayer] = useState<PlayerProps>({ x: 0, y: 0 });
 
+  const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
+    switch (direction) {
+      case "right":
+        setPlayer({
+          ...player,
+          x: player.x < width - 1 ? (player.x += 1) : player.x
+        });
+        break;
+      case "left":
+        setPlayer({
+          ...player,
+          x: player.x > 0 ? (player.x -= 1) : player.x
+        });
+        break;
+      case "down":
+        setPlayer({
+          ...player,
+          y: player.y < height - 1 ? (player.y += 1) : player.y
+        });
+        break;
+      case "up":
+        setPlayer({
+          ...player,
+          y: player.y > 0 ? (player.y -= 1) : player.y
+        });
+        break;
+    }
+  };
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       console.log(e.key);
       switch (e.key) {
         case "d":
-          setPlayer({ ...player, x: (player.x += 1) });
+          handlePlayerMove("right");
           break;
         case "a":
-          setPlayer({ ...player, x: (player.x -= 1) });
+          handlePlayerMove("left");
           break;
         case "s":
-          setPlayer({ ...player, y: (player.y += 1) });
+          handlePlayerMove("down");
           break;
         case "w":
-          setPlayer({ ...player, y: (player.y -= 1) });
+          handlePlayerMove("up");
           break;
         default:
           break;
       }
     };
 
-    window.addEventListener("keydown", handler);
+    window.addEventListener("keyup", handler);
 
     return () => {
-      window.removeEventListener("keydown", handler);
+      window.removeEventListener("keyup", handler);
     };
   }, []);
 
