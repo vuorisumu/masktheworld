@@ -4,11 +4,17 @@ export type MaskType = "normal" | "other";
 interface GameContextType {
   mask: MaskType;
   setMask: (mask: MaskType) => void;
+  stage: number;
+  stageUp: () => void;
+  stageDown: () => void;
 }
 
 const defaultContext: GameContextType = {
   mask: "normal",
   setMask: () => {},
+  stage: 0,
+  stageUp: () => {},
+  stageDown: () => {},
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);
