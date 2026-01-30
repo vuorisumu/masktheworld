@@ -1,5 +1,6 @@
 import { useState } from "react";
-import GameContext, { type MaskType } from "../utils/GameContext";
+import GameContext from "../utils/GameContext";
+import type { MaskType } from "../utils/types";
 import MaskButtons from "./MaskButtons";
 
 export default function GameScreen() {

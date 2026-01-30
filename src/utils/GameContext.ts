@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
+import type { MaskType } from "./types";
 
-export type MaskType = "normal" | "other";
 interface GameContextType {
   mask: MaskType;
   setMask: (mask: MaskType) => void;
