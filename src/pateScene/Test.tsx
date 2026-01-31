@@ -58,8 +58,8 @@ export default function Test({ onChange }: Props) {
               return false;
             }
 
-            // Box item move logic
-            if (blockItem && blockItem.item === "box") {
+            // Box and key item move logic
+            if (blockItem && ["box", "key"].includes(blockItem.item)) {
               // Would the box move outside world limits
               if (player.x < width) {
                 // Would block move into wall
@@ -95,7 +95,7 @@ export default function Test({ onChange }: Props) {
             }
 
             // Box item move logic
-            if (blockItem && blockItem.item === "box") {
+            if (blockItem && ["box", "key"].includes(blockItem.item)) {
               // Would the box move outside world limits
               if (player.x < width) {
                 // Would block move into wall
@@ -131,7 +131,7 @@ export default function Test({ onChange }: Props) {
             }
 
             // Box item move logic
-            if (blockItem && blockItem.item === "box") {
+            if (blockItem && ["box", "key"].includes(blockItem.item)) {
               // Would the box move outside world limits
               if (player.y > 1) {
                 // Would block move into wall
@@ -168,7 +168,7 @@ export default function Test({ onChange }: Props) {
             }
 
             // Box item move logic
-            if (blockItem && blockItem.item === "box") {
+            if (blockItem && ["box", "key"].includes(blockItem.item)) {
               // Would the box move outside world limits
               if (player.y < height - 1) {
                 // Would block move into wall
