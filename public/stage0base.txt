@@ -7,4 +7,4 @@ T---A--T
 T------T
 T------T
 TTTTTTTT
-XXXXXXXX
+OOOOOOOO

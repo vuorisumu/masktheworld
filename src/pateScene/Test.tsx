@@ -23,7 +23,7 @@ export default function Test({ onChange }: Props) {
   const [disablePlayer, setDisablePlayer] = useState<boolean>(false);
   const [animate, setAnimate] = useState<"idle" | "fall">("idle");
 
-  const { currentMap, getBlock } = useGameContext();
+  const { currentStageItems, getBlock, setItemPos } = useGameContext();
   const width: number = 8;
   const height: number = 8;
 
@@ -42,16 +42,55 @@ export default function Test({ onChange }: Props) {
       switch (direction) {
         case "right":
           if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
+            const blockItem = currentStageItems?.find(
+              (it) => it.x === player.x + 1 && it.y === player.y
+            );
+
+            if (blockItem && blockItem.item === "box") {
+              if (player.x < width && !getBlock(player.y, player.x + 2).solid) {
+                console.log("move box");
+                setItemPos(blockItem.id, player.x + 2, player.y);
+                return true;
+              } else {
+                return false;
+              }
+            }
             return true;
           }
           return false;
         case "left":
           if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
+            const blockItem = currentStageItems?.find(
+              (it) => it.x === player.x - 1 && it.y === player.y
+            );
+
+            if (blockItem && blockItem.item === "box") {
+              if (player.x < width && !getBlock(player.y, player.x - 2).solid) {
+                console.log("move box");
+                setItemPos(blockItem.id, player.x - 2, player.y);
+                return true;
+              } else {
+                return false;
+              }
+            }
             return true;
           }
           return false;
         case "up":
           if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
+            const blockItem = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y - 1
+            );
+
+            if (blockItem && blockItem.item === "box") {
+              if (player.y > 1 && !getBlock(player.y - 2, player.x).solid) {
+                console.log("move box");
+                setItemPos(blockItem.id, player.x, player.y - 2);
+                return true;
+              } else {
+                return false;
+              }
+            }
             return true;
           }
           return false;
@@ -60,17 +99,34 @@ export default function Test({ onChange }: Props) {
             player.y < height - 1 &&
             !getBlock(player.y + 1, player.x).solid
           ) {
+            const blockItem = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y + 1
+            );
+
+            if (blockItem && blockItem.item === "box") {
+              if (
+                player.y < height - 2 &&
+                !getBlock(player.y + 2, player.x).solid
+              ) {
+                console.log("move box");
+                setItemPos(blockItem.id, player.x, player.y + 2);
+                return true;
+              } else {
+                return false;
+              }
+            }
             return true;
           }
           return false;
       }
     },
-    [getBlock, player.x, player.y]
+    [getBlock, player.x, player.y, setItemPos]
   );
 
   const handlePlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {
       if (disablePlayer) return;
+      console.log(currentStageItems);
       switch (direction) {
         case "right":
           setPlayer({
@@ -102,7 +158,7 @@ export default function Test({ onChange }: Props) {
           break;
       }
     },
-    [canPlayerMove, player, disablePlayer]
+    [canPlayerMove, player, disablePlayer, currentStageItems]
   );
 
   const resetPlayer = () => {
@@ -112,8 +168,8 @@ export default function Test({ onChange }: Props) {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      console.log(e.key);
-      switch (e.key) {
+      // console.log(e.key);
+      switch (e.key.toLowerCase()) {
         case "d":
           handlePlayerMove("right");
           break;

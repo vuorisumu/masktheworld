@@ -1,9 +1,14 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Test from "../../pateScene/Test";
 import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
-import { type Block, type ItemType, type MapType, type MaskType } from "../../utils/types";
+import {
+  type Block,
+  type ItemType,
+  type MapType,
+  type MaskType
+} from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
 import Clock from "../Clock";
 
@@ -14,7 +19,8 @@ export default function GameScreen() {
   const [tick, setTick] = useState(0);
   const [allItems, setAllItems] = useState<ItemType[]>([
     { id: 1, item: "box", x: 2, y: 2, level: 0, mask: "normal" },
-    { id: 2, item: "box", x: 3, y: 2, level: 0, mask: "other" },
+    { id: 2, item: "box", x: 5, y: 4, level: 0, mask: "normal" },
+    { id: 3, item: "box", x: 3, y: 2, level: 0, mask: "other" }
   ]);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
@@ -33,7 +39,9 @@ export default function GameScreen() {
   }, [stage, mask, allMaps]);
 
   const currentStageItems = useMemo<ItemType[]>(() => {
-    const matches = allItems.filter((m) => m.level === stage && m.mask === mask);
+    const matches = allItems.filter(
+      (m) => m.level === stage && m.mask === mask
+    );
     return matches;
   }, [stage, mask, allItems]);
 
@@ -51,7 +59,7 @@ export default function GameScreen() {
       prev.map((m) => {
         if (m.id === itemID) return { ...m, x, y };
         return m;
-      }),
+      })
     );
   };
 
@@ -83,13 +91,17 @@ export default function GameScreen() {
         currentStageMaps,
         currentStageItems,
         getBlock,
-        setItemPos,
+        setItemPos
       }}
     >
       <Clock refresh={tick} />
       <MaskButtons />
       <Test onChange={() => addTick()} />
-      <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
+      <ButtonPrompt
+        buttonText='Luovuta'
+        onConfirm={quitGame}
+        promptText='U SURE??'
+      />
     </GameContext.Provider>
   );
 }

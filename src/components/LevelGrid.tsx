@@ -3,6 +3,7 @@ import { useGameContext } from "../utils/GameContext";
 import type { Position } from "../utils/types";
 import GridBlock from "./GridBlock";
 import PlayerTile from "./PlayerTile";
+import BoxSpr from "../assets/Spr_Box.png";
 
 type Props = {
   playerPos: { x: number; y: number };
@@ -12,7 +13,7 @@ type Props = {
 
 export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
   const gridBlockSize = 50;
-  const { currentMap, getBlock } = useGameContext();
+  const { currentMap, getBlock, currentStageItems } = useGameContext();
   const [falling, setFalling] = useState<boolean>(false);
 
   const samePos = (a: Position, b: Position) => {
@@ -20,21 +21,7 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
   };
 
   useEffect(() => {
-    // if (anim === "fall") {
-    //   console.log("falling!");
-    //   setFalling(true);
-    //   const t = setTimeout(() => {
-    //     setFalling(false);
-    //     resetAnim();
-    //   }, 1250);
-    //   return () => clearTimeout(t);
-    // } else if (anim === "idle") {
-    //   console.log("idling");
-    // }
-  }, [anim]);
-
-  useEffect(() => {
-    console.log(playerPos, getBlock(playerPos.y, playerPos.x + 1));
+    //    console.log(playerPos, getBlock(playerPos.y, playerPos.x + 1));
 
     if (getBlock(playerPos.y, playerPos.x).fall) {
       setFalling(true);
@@ -62,6 +49,31 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
           ))}
         </div>
       ))}
+      {/* Items */}
+      {currentStageItems?.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            width: `${gridBlockSize}px`,
+            height: `${gridBlockSize}px`,
+            position: "absolute",
+            left: `${item.x * gridBlockSize}px`,
+            top: `${item.y * gridBlockSize}px`
+            // backgroundColor: "white"
+          }}
+        >
+          <img
+            src={getItemSprite(item.item)}
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative"
+            }}
+          />
+        </div>
+      ))}
+
+      {/* Player animations */}
       <div
         style={{
           position: "absolute",
@@ -103,5 +115,15 @@ const styles: { [key: string]: CSSProperties } = {
   col: {
     display: "flex",
     flexDirection: "column"
+  }
+};
+
+const getItemSprite = (name: string) => {
+  switch (name) {
+    case "box":
+      return BoxSpr;
+    default:
+      return BoxSpr;
+      break;
   }
 };
