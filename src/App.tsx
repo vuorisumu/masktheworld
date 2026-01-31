@@ -33,6 +33,8 @@ function App() {
                   switch (col) {
                     case "X":
                       return { solid: true, name: "wall" };
+                    case "T":
+                      return { solid: true, name: "topwall" };
                     case "-":
                       return { solid: false, name: "floor" };
                     default:
