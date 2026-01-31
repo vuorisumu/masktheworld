@@ -15,6 +15,9 @@ export default function GameScreen() {
   const { changeScene, allMaps } = useAppContext();
   const [tick, setTick] = useState(0);
   const [allItems, setAllItems] = useState<ItemType[]>(initItems);
+  const [interactedBlocks, setInteractedBlocks] = useState<
+    { x: number; y: number; mask: MaskType; stage: number }[]
+  >([]);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -38,11 +41,25 @@ export default function GameScreen() {
 
   const getBlock = (x: number, y: number) => {
     const itemFound = currentStageItems.find((i) => i.x === x && i.y === y);
-    if (itemFound) {
-      const curr = currentMap[x][y];
-      return { ...curr, item: { id: itemFound.id, name: itemFound.item } };
+    const curr = currentMap[x][y];
+    const arr = ["button", "door"];
+    let activated = false;
+    if (arr.includes(curr.name)) {
+      const hasActivated = interactedBlocks.find(
+        (i) => i.x === x && i.y === y && i.mask === mask && i.stage === stage,
+      );
+      if (hasActivated) activated = true;
     }
-    return currentMap[x][y];
+    return {
+      ...curr,
+      ...(itemFound && { item: { id: itemFound.id, name: itemFound.item } }),
+      ...(arr.includes(curr.name) && { activated }),
+    };
+    // if (itemFound) {
+    //   const curr = currentMap[x][y];
+    //   return { ...curr, item: { id: itemFound.id, name: itemFound.item } };
+    // }
+    // return currentMap[x][y];
   };
 
   const setItemPos = (itemID: number, x: number, y: number) => {
@@ -74,6 +91,10 @@ export default function GameScreen() {
     setAllItems(initItems);
   };
 
+  const activateBlock = (x: number, y: number) => {
+    setInteractedBlocks((prev) => [...prev, { x, y, mask, stage }]);
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -88,6 +109,7 @@ export default function GameScreen() {
         getBlock,
         setItemPos,
         resetAllItems,
+        activateBlock,
       }}
     >
       <div style={styles.menu}>

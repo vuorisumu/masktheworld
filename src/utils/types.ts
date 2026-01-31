@@ -15,6 +15,7 @@ export type Block = {
   name: string;
   fall: boolean;
   item?: { id: number; name: string };
+  activated?: boolean;
 };
 
 export type MapType = {
