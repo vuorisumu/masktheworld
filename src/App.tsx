@@ -14,7 +14,7 @@ function App() {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" },
+      { stage: 1, mask: "other", file: "maskedLevel" }
     ];
 
     const loadMaps = async () => {
@@ -57,11 +57,11 @@ function App() {
                     default:
                       return { id, solid: false, name: "floor", fall: false };
                   }
-                }),
+                })
             );
 
           return { ...map, level };
-        }),
+        })
       );
 
       setAllMaps(loaded);

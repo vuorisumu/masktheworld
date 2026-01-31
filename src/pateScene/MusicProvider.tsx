@@ -6,17 +6,19 @@ import { useEffect, type ReactNode } from "react";
 export function MusicProvider({ children }: { children: ReactNode }) {
   const { screen } = useAppContext();
 
-  const { load, stop, isLoading } = useAudioPlayer();
+  const { load: sfx } = useAudioPlayer();
+  const { load: music, isLoading: musicLoading } = useAudioPlayer();
 
   const handleStart = (name: string) => {
-    load(name, {
+    music(name, {
       initialVolume: 0.75,
-      autoplay: true
+      autoplay: true,
+      loop: true
     });
   };
 
   const playClick = () => {
-    load("/pipe.wav", {
+    sfx("/pipe.wav", {
       initialVolume: 1,
       autoplay: true
     });
@@ -25,10 +27,10 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     switch (screen) {
       case "menu":
-        handleStart("/calm.mp3");
+        handleStart("/angry.mp3");
         break;
       case "game":
-        stop();
+        handleStart("/game.mp3");
         break;
       default:
         stop();
@@ -41,7 +43,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   return (
     <MusicContext.Provider value={{ play, playClick }}>
-      {!isLoading ? children : <p>Loading...</p>}
+      {!musicLoading ? children : <p>Loading...</p>}
     </MusicContext.Provider>
   );
 }
