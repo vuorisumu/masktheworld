@@ -21,8 +21,8 @@ const defaultContext: GameContextType = {
   currentMap: [[]],
   currentStageMaps: [{ stage: 0, mask: "normal", file: "" }],
   getBlock: () => {
-    return { solid: true, name: "wall" };
-  },
+    return { solid: true, name: "wall", fall: false };
+  }
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);

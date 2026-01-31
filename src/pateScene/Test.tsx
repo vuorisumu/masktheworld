@@ -21,6 +21,7 @@ export default function Test({ onChange }: Props) {
     pastY: 3
   });
   const [disablePlayer, setDisablePlayer] = useState<boolean>(false);
+  const [animate, setAnimate] = useState<"idle" | "fall">("idle");
 
   const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
@@ -28,7 +29,7 @@ export default function Test({ onChange }: Props) {
 
   useEffect(() => {
     if (getBlock(player.y, player.x).fall) {
-      alert("Fell!!!");
+      setDisablePlayer(true);
     }
   }, [player.x, player.y, getBlock]);
 
@@ -69,6 +70,7 @@ export default function Test({ onChange }: Props) {
 
   const handlePlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {
+      if (disablePlayer) return;
       switch (direction) {
         case "right":
           setPlayer({
@@ -100,8 +102,13 @@ export default function Test({ onChange }: Props) {
           break;
       }
     },
-    [canPlayerMove, player]
+    [canPlayerMove, player, disablePlayer]
   );
+
+  const resetPlayer = () => {
+    setPlayer({ ...player, x: 3, y: 3 });
+    setDisablePlayer(false);
+  };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -131,7 +138,9 @@ export default function Test({ onChange }: Props) {
     };
   }, [handlePlayerMove]);
 
-  return <LevelGrid playerPos={player} />;
+  return (
+    <LevelGrid playerPos={player} anim={animate} resetPlayer={resetPlayer} />
+  );
 
   // return (
   //   <div>
