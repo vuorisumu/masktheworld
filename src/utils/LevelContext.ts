@@ -5,12 +5,16 @@ interface LevelContextType {
   playerPos: Position;
   setPlayerPos: (pos: Position) => void;
   currentMap: Block[][];
+  getBlock: (x: number, y: number) => Block;
 }
 
 const defaultContext: LevelContextType = {
   playerPos: { x: 0, y: 0 },
   setPlayerPos: () => {},
   currentMap: [[]],
+  getBlock: () => {
+    return { solid: true, name: "wall" };
+  },
 };
 
 const LevelContext = createContext<LevelContextType>(defaultContext);

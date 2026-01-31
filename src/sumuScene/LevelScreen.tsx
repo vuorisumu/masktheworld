@@ -8,8 +8,12 @@ export default function LevelScreen() {
   const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 });
   const currentMap = useGetMap();
 
+  const getBlock = (x: number, y: number) => {
+    return currentMap[x][y];
+  };
+
   return (
-    <LevelContext.Provider value={{ playerPos, setPlayerPos, currentMap }}>
+    <LevelContext.Provider value={{ playerPos, setPlayerPos, currentMap, getBlock }}>
       <Test />
     </LevelContext.Provider>
   );
