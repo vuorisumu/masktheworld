@@ -13,6 +13,7 @@ interface GameContextType {
   getBlock: (x: number, y: number) => Block;
   setItemPos: (id: number, x: number, y: number) => void;
   resetAllItems: () => void;
+  activateBlock: (x: number, y: number) => void;
 }
 
 const defaultContext: GameContextType = {
@@ -28,6 +29,7 @@ const defaultContext: GameContextType = {
   },
   setItemPos: () => {},
   resetAllItems: () => {},
+  activateBlock: () => {},
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);
