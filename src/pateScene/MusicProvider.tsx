@@ -15,6 +15,13 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const playClick = () => {
+    load("/pipe.wav", {
+      initialVolume: 1,
+      autoplay: true
+    });
+  };
+
   useEffect(() => {
     switch (screen) {
       case "menu":
@@ -33,7 +40,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MusicContext.Provider value={{ play }}>
+    <MusicContext.Provider value={{ play, playClick }}>
       {!isLoading ? children : <p>Loading...</p>}
     </MusicContext.Provider>
   );
