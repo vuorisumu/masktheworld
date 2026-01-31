@@ -10,6 +10,7 @@ interface GameContextType {
   currentMap: Block[][];
   currentStageMaps: MapType[];
   getBlock: (x: number, y: number) => Block;
+  setItemPos: (id: number, x: number, y: number) => void;
 }
 
 const defaultContext: GameContextType = {
@@ -22,7 +23,8 @@ const defaultContext: GameContextType = {
   currentStageMaps: [{ stage: 0, mask: "normal", file: "" }],
   getBlock: () => {
     return { solid: true, name: "wall", fall: false };
-  }
+  },
+  setItemPos: () => {},
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);
