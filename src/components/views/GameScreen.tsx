@@ -81,6 +81,7 @@ export default function GameScreen() {
         stageDown,
         currentMap,
         currentStageMaps,
+        currentStageItems,
         getBlock,
         setItemPos,
       }}
