@@ -13,7 +13,7 @@ interface GameContextType {
   getBlock: (x: number, y: number) => Block;
   setItemPos: (id: number, x: number, y: number) => void;
   resetAllItems: () => void;
-  activateBlock: (x: number, y: number) => void;
+  activateBlock: (id: string) => void;
 }
 
 const defaultContext: GameContextType = {
@@ -25,7 +25,7 @@ const defaultContext: GameContextType = {
   currentMap: [[]],
   currentStageMaps: [{ stage: 0, mask: "normal", file: "" }],
   getBlock: () => {
-    return { solid: true, name: "wall", fall: false };
+    return { id: "", solid: true, name: "wall", fall: false };
   },
   setItemPos: () => {},
   resetAllItems: () => {},

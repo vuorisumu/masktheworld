@@ -11,6 +11,7 @@ export type Position = {
 };
 
 export type Block = {
+  id: string;
   solid: boolean;
   name: string;
   fall: boolean;
