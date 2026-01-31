@@ -54,6 +54,14 @@ function App() {
                       return { id, solid: false, name: "exit", fall: false };
                     case "C":
                       return { id, solid: false, name: "cexit", fall: false };
+                    case "D":
+                      return { id, solid: true, name: "door", fall: false, activated: false };
+                    case "B":
+                      return { id, solid: true, name: "cdoor", fall: false, activated: false };
+                    case "*":
+                      return { id, solid: false, name: "button", fall: false, activated: false };
+                    case "^":
+                      return { id, solid: false, name: "cbutton", fall: false, activated: false };
                     default:
                       return { id, solid: false, name: "floor", fall: false };
                   }

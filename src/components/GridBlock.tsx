@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import { getBlockSprite } from "../utils/getBlockSprite";
 import type { Block } from "../utils/types";
-import PlayerTile from "./PlayerTile";
 
 type Props = {
   block: Block;
@@ -16,11 +15,17 @@ export default function GridBlock({ block, hasPlayer, size }: Props) {
         width: `${size}px`,
         height: `${size}px`,
         // border: "1px solid white",
-        backgroundColor: block.solid ? "grey" : "black"
+        backgroundColor: block.solid ? "grey" : "black",
       }}
     >
-      <div>
-        <img src={getBlockSprite(block.name)} style={styles.image} />
+      <div style={{ position: "relative" }}>
+        <img src={getBlockSprite(block.name, block.activated)} style={styles.image} />
+        {["button", "cbutton"].includes(block.name) && (
+          <img
+            src={getBlockSprite("btn")}
+            style={{ ...styles.image, position: "absolute", top: 0, left: 0 }}
+          />
+        )}
       </div>
       {hasPlayer && (
         <div
@@ -30,7 +35,7 @@ export default function GridBlock({ block, hasPlayer, size }: Props) {
             top: 0,
             width: "100%",
             height: "100%",
-            zIndex: 3
+            zIndex: 3,
           }}
         ></div>
       )}
@@ -41,6 +46,6 @@ export default function GridBlock({ block, hasPlayer, size }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   image: {
     width: "100%",
-    height: "100%"
-  }
+    height: "100%",
+  },
 };
