@@ -45,7 +45,11 @@ function App() {
                     case ".":
                       return { solid: false, name: "cfloor", fall: false };
                     case "A":
-                      return { solid: false, name: "pit", fall: true };
+                      return { solid: false, name: "hole", fall: true };
+                    case "O":
+                      return { solid: false, name: "ehole", fall: true };
+                    case "Ö":
+                      return { solid: false, name: "chole", fall: true };
                     default:
                       return { solid: false, name: "floor", fall: false };
                   }
