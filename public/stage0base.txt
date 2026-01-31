@@ -4,7 +4,7 @@ T-----TT
 E------T
 T---O--T
 T---A--T
-D--*---T
-T------T
+D--I---T
+T-1----T
 TTTTTTTT
 OOOOOOOO
