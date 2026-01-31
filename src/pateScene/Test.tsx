@@ -45,6 +45,13 @@ export default function Test({ onChange }: Props) {
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x + 1 && it.y === player.y
             );
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x + 2 && it.y === player.y
+            );
+
+            if (blockItem && blockItem2) {
+              return false;
+            }
 
             if (blockItem && blockItem.item === "box") {
               if (player.x < width) {
@@ -66,6 +73,13 @@ export default function Test({ onChange }: Props) {
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x - 1 && it.y === player.y
             );
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x - 2 && it.y === player.y
+            );
+
+            if (blockItem && blockItem2) {
+              return false;
+            }
 
             if (blockItem && blockItem.item === "box") {
               if (player.x < width) {
@@ -87,6 +101,13 @@ export default function Test({ onChange }: Props) {
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x && it.y === player.y - 1
             );
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y - 2
+            );
+
+            if (blockItem && blockItem2) {
+              return false;
+            }
 
             if (blockItem && blockItem.item === "box") {
               if (player.y > 1) {
@@ -111,6 +132,13 @@ export default function Test({ onChange }: Props) {
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x && it.y === player.y + 1
             );
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y + 2
+            );
+
+            if (blockItem && blockItem2) {
+              return false;
+            }
 
             if (blockItem && blockItem.item === "box") {
               if (player.y < height - 1) {
