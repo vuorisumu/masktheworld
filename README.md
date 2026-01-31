@@ -25,3 +25,9 @@
 `C` Exit Creepy
 
 `D` Door
+
+`B` Creepy door
+
+`*` Button
+
+`^` Creepy button

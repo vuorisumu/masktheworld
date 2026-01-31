@@ -1,3 +1,5 @@
+import btn_pressed from "../assets/Spr_Button_Down.png";
+import btn_up from "../assets/Spr_Button_Up.png";
 import creepy_floor from "../assets/Spr_Creepy_Floor.png";
 import creepy_hole_edge from "../assets/Spr_Creepy_Hole.png";
 import creepy_wall_1 from "../assets/Spr_Creepy_wall_1.png";
@@ -12,6 +14,7 @@ import normal_wall_2 from "../assets/Spr_Normal_wall_2.png";
 
 export const getBlockSprite = (name: string, active?: boolean) => {
   switch (name) {
+    case "button":
     case "floor":
       return normal_floor;
     case "wall":
@@ -22,6 +25,7 @@ export const getBlockSprite = (name: string, active?: boolean) => {
       return creepy_wall_2;
     case "ctopwall":
       return creepy_wall_1;
+    case "cbutton":
     case "cfloor":
       return creepy_floor;
     case "hole":
@@ -38,6 +42,8 @@ export const getBlockSprite = (name: string, active?: boolean) => {
       return active ? normal_floor : door;
     case "cdoor":
       return active ? creepy_floor : door;
+    case "btn":
+      return active ? btn_pressed : btn_up;
     default:
       return normal_floor;
   }
