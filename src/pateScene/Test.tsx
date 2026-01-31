@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
-import type { Block } from "../utils/types";
 import { useGameContext } from "../utils/GameContext";
+import type { Position } from "../utils/types";
 
 interface PlayerProps {
   x: number;
@@ -10,17 +10,24 @@ interface PlayerProps {
   pastY: number;
 }
 
-export default function Test() {
+type Props = {
+  onChange: (playerPos: Position) => void;
+};
+export default function Test({ onChange }: Props) {
   const [player, setPlayer] = useState<PlayerProps>({
     x: 3,
     y: 3,
     pastX: 3,
-    pastY: 3
+    pastY: 3,
   });
 
   const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
   const height: number = 8;
+
+  useEffect(() => {
+    onChange(player);
+  }, [player]);
 
   // const playerRight: boolean = useMemo(
   //   () =>
@@ -48,16 +55,13 @@ export default function Test() {
           }
           return false;
         case "down":
-          if (
-            player.y < height - 1 &&
-            !getBlock(player.y + 1, player.x).solid
-          ) {
+          if (player.y < height - 1 && !getBlock(player.y + 1, player.x).solid) {
             return true;
           }
           return false;
       }
     },
-    [getBlock, player.x, player.y]
+    [getBlock, player.x, player.y],
   );
 
   const handlePlayerMove = useCallback(
@@ -67,33 +71,33 @@ export default function Test() {
           setPlayer({
             ...player,
             pastX: canPlayerMove(direction) ? player.x : player.pastX,
-            x: canPlayerMove(direction) ? (player.x += 1) : player.x
+            x: canPlayerMove(direction) ? (player.x += 1) : player.x,
           });
           break;
         case "left":
           setPlayer({
             ...player,
             pastX: canPlayerMove(direction) ? player.x : player.pastX,
-            x: canPlayerMove(direction) ? (player.x -= 1) : player.x
+            x: canPlayerMove(direction) ? (player.x -= 1) : player.x,
           });
           break;
         case "down":
           setPlayer({
             ...player,
             pastY: canPlayerMove(direction) ? player.y : player.pastY,
-            y: canPlayerMove(direction) ? (player.y += 1) : player.y
+            y: canPlayerMove(direction) ? (player.y += 1) : player.y,
           });
           break;
         case "up":
           setPlayer({
             ...player,
             pastY: canPlayerMove(direction) ? player.y : player.pastY,
-            y: canPlayerMove(direction) ? (player.y -= 1) : player.y
+            y: canPlayerMove(direction) ? (player.y -= 1) : player.y,
           });
           break;
       }
     },
-    [canPlayerMove, player]
+    [canPlayerMove, player],
   );
 
   useEffect(() => {

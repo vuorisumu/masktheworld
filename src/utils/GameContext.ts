@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { Block, MaskType } from "./types";
+import type { Block, MapType, MaskType } from "./types";
 
 interface GameContextType {
   mask: MaskType;
@@ -8,6 +8,7 @@ interface GameContextType {
   stageUp: () => void;
   stageDown: () => void;
   currentMap: Block[][];
+  currentStageMaps: MapType[];
   getBlock: (x: number, y: number) => Block;
 }
 
@@ -18,6 +19,7 @@ const defaultContext: GameContextType = {
   stageUp: () => {},
   stageDown: () => {},
   currentMap: [[]],
+  currentStageMaps: [{ stage: 0, mask: "normal", file: "" }],
   getBlock: () => {
     return { solid: true, name: "wall" };
   },

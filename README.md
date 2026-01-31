@@ -11,3 +11,5 @@
 `Y` Creepy Top wall
 
 `.` Creepy floor
+
+`A` Pit
