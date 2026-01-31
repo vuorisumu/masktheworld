@@ -1,15 +1,30 @@
-import { useState } from "react";
-import LevelScreen from "../../sumuScene/LevelScreen";
+import { useMemo, useState } from "react";
+import Test from "../../pateScene/Test";
 import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
-import type { MaskType } from "../../utils/types";
+import type { Block, MaskType } from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
 
 export default function GameScreen() {
   const [mask, setMask] = useState<MaskType>("normal");
   const [stage, setStage] = useState(0);
-  const { changeScene } = useAppContext();
+  const { changeScene, allMaps } = useAppContext();
+
+  const currentMap = useMemo<Block[][]>(() => {
+    const match = allMaps.find((m) => m.stage === stage && m.mask === mask);
+    if (match && match.level) {
+      console.log("Currently used level has changed", match);
+      return match.level;
+    } else {
+      console.log("No map associated with stage", stage, "and mask", mask);
+    }
+    return [[]];
+  }, [stage, mask, allMaps]);
+
+  const getBlock = (x: number, y: number) => {
+    return currentMap[x][y];
+  };
 
   const stageUp = () => {
     setStage(stage + 1);
@@ -24,9 +39,11 @@ export default function GameScreen() {
   };
 
   return (
-    <GameContext.Provider value={{ mask, setMask, stage, stageUp, stageDown }}>
+    <GameContext.Provider
+      value={{ mask, setMask, stage, stageUp, stageDown, currentMap, getBlock }}
+    >
       <MaskButtons />
-      <LevelScreen />
+      <Test />
       <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
     </GameContext.Provider>
   );
