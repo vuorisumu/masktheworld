@@ -15,9 +15,7 @@ export default function GameScreen() {
   const { changeScene, allMaps } = useAppContext();
   const [tick, setTick] = useState(0);
   const [allItems, setAllItems] = useState<ItemType[]>(initItems);
-  const [interactedBlocks, setInteractedBlocks] = useState<
-    { x: number; y: number; mask: MaskType; stage: number }[]
-  >([]);
+  const [interactedBlocks, setInteractedBlocks] = useState<string[]>([]);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -45,10 +43,7 @@ export default function GameScreen() {
     const arr = ["button", "door"];
     let activated = false;
     if (arr.includes(curr.name)) {
-      const hasActivated = interactedBlocks.find(
-        (i) => i.x === x && i.y === y && i.mask === mask && i.stage === stage,
-      );
-      if (hasActivated) activated = true;
+      if (interactedBlocks.includes(curr.id)) activated = true;
     }
     return {
       ...curr,
@@ -91,8 +86,12 @@ export default function GameScreen() {
     setAllItems(initItems);
   };
 
-  const activateBlock = (x: number, y: number) => {
-    setInteractedBlocks((prev) => [...prev, { x, y, mask, stage }]);
+  const activateBlock = (id: string) => {
+    if (interactedBlocks.includes(id)) {
+      setInteractedBlocks((prev) => prev.filter((i) => i !== id));
+    } else {
+      setInteractedBlocks((prev) => [...prev, id]);
+    }
   };
 
   return (

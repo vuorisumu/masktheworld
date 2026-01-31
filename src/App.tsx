@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { MusicProvider } from "./pateScene/MusicProvider";
 import ScreenHandler from "./sumuScene/ScreenHandler";
 import AppContext from "./utils/AppContext";
 import { type Block, type MapType, type ScreenName } from "./utils/types";
-import { MusicProvider } from "./pateScene/MusicProvider";
 
 function App() {
   const [screen, setScreen] = useState<ScreenName>("start");
@@ -14,54 +14,54 @@ function App() {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" }
+      { stage: 1, mask: "other", file: "maskedLevel" },
     ];
 
     const loadMaps = async () => {
       const loaded = await Promise.all(
-        maps.map(async (map) => {
+        maps.map(async (map, a) => {
           const r = await fetch(`${map.file}.txt`);
           const txt = await r.text();
           const level: Block[][] = txt
             .trim()
             .split("\n")
-            .map((row) =>
+            .map((row, b) =>
               row
                 .split("")
                 .filter((v) => v !== "\r")
-                .map((col) => {
-                  console.log(col);
+                .map((col, c) => {
+                  const id = `${a}-${b}-${c}`;
                   switch (col) {
                     case "X":
-                      return { solid: true, name: "wall", fall: false };
+                      return { id, solid: true, name: "wall", fall: false };
                     case "T":
-                      return { solid: true, name: "topwall", fall: false };
+                      return { id, solid: true, name: "topwall", fall: false };
                     case "M":
-                      return { solid: true, name: "cwall", fall: false };
+                      return { id, solid: true, name: "cwall", fall: false };
                     case "Y":
-                      return { solid: true, name: "ctopwall", fall: false };
+                      return { id, solid: true, name: "ctopwall", fall: false };
                     case "-":
-                      return { solid: false, name: "floor", fall: false };
+                      return { id, solid: false, name: "floor", fall: false };
                     case ".":
-                      return { solid: false, name: "cfloor", fall: false };
+                      return { id, solid: false, name: "cfloor", fall: false };
                     case "A":
-                      return { solid: false, name: "hole", fall: true };
+                      return { id, solid: false, name: "hole", fall: true };
                     case "O":
-                      return { solid: false, name: "ehole", fall: true };
+                      return { id, solid: false, name: "ehole", fall: true };
                     case "Ö":
-                      return { solid: false, name: "chole", fall: true };
+                      return { id, solid: false, name: "chole", fall: true };
                     case "E":
-                      return { solid: false, name: "exit", fall: false };
+                      return { id, solid: false, name: "exit", fall: false };
                     case "C":
-                      return { solid: false, name: "cexit", fall: false };
+                      return { id, solid: false, name: "cexit", fall: false };
                     default:
-                      return { solid: false, name: "floor", fall: false };
+                      return { id, solid: false, name: "floor", fall: false };
                   }
-                })
+                }),
             );
 
           return { ...map, level };
-        })
+        }),
       );
 
       setAllMaps(loaded);
