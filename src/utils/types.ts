@@ -14,3 +14,10 @@ export type Block = {
   solid: boolean;
   name: string;
 };
+
+export type MapType = {
+  stage: number;
+  mask: MaskType;
+  file: string;
+  level?: Block[][];
+};
