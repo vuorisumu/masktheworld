@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
+import logo from "../../assets/Spr_LOGO.png";
 import Test from "../../pateScene/Test";
 import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
@@ -86,10 +87,24 @@ export default function GameScreen() {
         setItemPos,
       }}
     >
-      <Clock refresh={tick} />
-      <MaskButtons />
+      <div style={styles.menu}>
+        <img src={logo} />
+        <MaskButtons />
+        <Clock refresh={tick} />
+      </div>
       <Test onChange={() => addTick()} />
       <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
     </GameContext.Provider>
   );
 }
+
+const styles: { [key: string]: CSSProperties } = {
+  menu: {
+    display: "flex",
+    flexDirection: "row",
+    height: "100px",
+    gap: 20,
+    alignContent: "center",
+    paddingBottom: 10,
+  },
+};
