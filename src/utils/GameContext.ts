@@ -12,6 +12,7 @@ interface GameContextType {
   currentStageItems?: ItemType[];
   getBlock: (x: number, y: number) => Block;
   setItemPos: (id: number, x: number, y: number) => void;
+  resetAllItems: () => void;
 }
 
 const defaultContext: GameContextType = {
@@ -26,6 +27,7 @@ const defaultContext: GameContextType = {
     return { solid: true, name: "wall", fall: false };
   },
   setItemPos: () => {},
+  resetAllItems: () => {},
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);
