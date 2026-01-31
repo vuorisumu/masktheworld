@@ -23,7 +23,8 @@ export default function Test({ onChange }: Props) {
   const [disablePlayer, setDisablePlayer] = useState<boolean>(false);
   const [animate, setAnimate] = useState<"idle" | "fall">("idle");
 
-  const { currentStageItems, getBlock, setItemPos } = useGameContext();
+  const { currentStageItems, getBlock, setItemPos, currentMap } =
+    useGameContext();
   const width: number = 8;
   const height: number = 8;
 
@@ -31,7 +32,7 @@ export default function Test({ onChange }: Props) {
     if (getBlock(player.y, player.x).fall) {
       setDisablePlayer(true);
     }
-  }, [player.x, player.y, getBlock]);
+  }, [player.x, player.y, getBlock, currentMap]);
 
   useEffect(() => {
     onChange(player);

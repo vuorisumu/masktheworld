@@ -13,8 +13,9 @@ type Props = {
 
 export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
   const gridBlockSize = 50;
-  const { currentMap, getBlock, currentStageItems } = useGameContext();
+  const { currentMap, getBlock, currentStageItems, stageUp } = useGameContext();
   const [falling, setFalling] = useState<boolean>(false);
+  const [fade, setFade] = useState<boolean>(false);
 
   const samePos = (a: Position, b: Position) => {
     return a.x === b.x && a.y === b.y;
@@ -22,7 +23,15 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
 
   useEffect(() => {
     //    console.log(playerPos, getBlock(playerPos.y, playerPos.x + 1));
-
+    if (["exit", "cexit"].includes(getBlock(playerPos.y, playerPos.x).name)) {
+      setFade(true);
+      const t = setTimeout(() => {
+        stageUp();
+        resetPlayer();
+        setFade(false);
+      }, 500);
+      return () => clearTimeout(t);
+    }
     if (getBlock(playerPos.y, playerPos.x).fall) {
       setFalling(true);
 
@@ -32,10 +41,20 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
       }, 1250);
       return () => clearTimeout(t);
     }
-  }, [playerPos]);
+  }, [playerPos, currentMap]);
 
   return (
     <div style={{ position: "relative" }}>
+      <div
+        style={{
+          opacity: fade ? "1" : "0",
+          transition: "opacity 0.5s ease",
+          backgroundColor: "black",
+          position: "absolute",
+          inset: 0,
+          zIndex: 50
+        }}
+      />
       {currentMap.map((row, i) => (
         <div key={i} style={styles.row}>
           {row.map((col, j) => (
