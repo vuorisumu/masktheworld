@@ -12,4 +12,10 @@
 
 `.` Creepy floor
 
-`A` Pit
+`A` Hole
+
+`O` Hole Edge
+
+`Ä` Creepy Hole
+
+`Ö` Creepy Hole Edge
