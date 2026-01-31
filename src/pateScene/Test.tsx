@@ -41,15 +41,33 @@ export default function Test({ onChange }: Props) {
     (direction: "up" | "down" | "right" | "left") => {
       switch (direction) {
         case "right":
+          // Can the player move
           if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
+            // Get item value for block on right
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x + 1 && it.y === player.y
             );
+            // Get item value for second block on right
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x + 2 && it.y === player.y
+            );
 
+            // If both are items then cant move
+            if (blockItem && blockItem2) {
+              return false;
+            }
+
+            // Box item move logic
             if (blockItem && blockItem.item === "box") {
-              if (player.x < width && !getBlock(player.y, player.x + 2).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x + 2, player.y);
+              // Would the box move outside world limits
+              if (player.x < width) {
+                // Would block move into wall
+                if (!getBlock(player.y, player.x + 2).solid) {
+                  setItemPos(blockItem.id, player.x + 2, player.y);
+                } else {
+                  // Swap places with box
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -59,15 +77,33 @@ export default function Test({ onChange }: Props) {
           }
           return false;
         case "left":
+          // Can the player move
           if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
+            // Get item value for block on left
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x - 1 && it.y === player.y
             );
+            // Get item value for second block on left
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x - 2 && it.y === player.y
+            );
 
+            // If both are items then cant move
+            if (blockItem && blockItem2) {
+              return false;
+            }
+
+            // Box item move logic
             if (blockItem && blockItem.item === "box") {
-              if (player.x < width && !getBlock(player.y, player.x - 2).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x - 2, player.y);
+              // Would the box move outside world limits
+              if (player.x < width) {
+                // Would block move into wall
+                if (!getBlock(player.y, player.x - 2).solid) {
+                  setItemPos(blockItem.id, player.x - 2, player.y);
+                } else {
+                  // Swap places with box
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -77,15 +113,33 @@ export default function Test({ onChange }: Props) {
           }
           return false;
         case "up":
+          // Can the player move
           if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
+            // Get item value for block on top
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x && it.y === player.y - 1
             );
+            // Get item value for second block on top
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y - 2
+            );
 
+            // If both are items then cant move
+            if (blockItem && blockItem2) {
+              return false;
+            }
+
+            // Box item move logic
             if (blockItem && blockItem.item === "box") {
-              if (player.y > 1 && !getBlock(player.y - 2, player.x).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x, player.y - 2);
+              // Would the box move outside world limits
+              if (player.y > 1) {
+                // Would block move into wall
+                if (!getBlock(player.y - 2, player.x).solid) {
+                  setItemPos(blockItem.id, player.x, player.y - 2);
+                } else {
+                  // Swap places with box
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -95,6 +149,7 @@ export default function Test({ onChange }: Props) {
           }
           return false;
         case "down":
+          // Can the player move
           if (
             player.y < height - 1 &&
             !getBlock(player.y + 1, player.x).solid
@@ -102,14 +157,26 @@ export default function Test({ onChange }: Props) {
             const blockItem = currentStageItems?.find(
               (it) => it.x === player.x && it.y === player.y + 1
             );
+            const blockItem2 = currentStageItems?.find(
+              (it) => it.x === player.x && it.y === player.y + 2
+            );
 
+            // If both are items then cant move
+            if (blockItem && blockItem2) {
+              return false;
+            }
+
+            // Box item move logic
             if (blockItem && blockItem.item === "box") {
-              if (
-                player.y < height - 2 &&
-                !getBlock(player.y + 2, player.x).solid
-              ) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x, player.y + 2);
+              // Would the box move outside world limits
+              if (player.y < height - 1) {
+                // Would block move into wall
+                if (!getBlock(player.y + 2, player.x).solid) {
+                  setItemPos(blockItem.id, player.x, player.y + 2);
+                } else {
+                  // Swap places with box
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
