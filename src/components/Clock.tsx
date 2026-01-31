@@ -19,12 +19,14 @@ export default function Clock({ refresh }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   wrapper: {
     position: "relative",
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   image: {
     position: "absolute",
     width: "100%",
     height: "100%",
+    top: 10,
+    left: 10,
   },
 };
