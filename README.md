@@ -23,3 +23,5 @@
 `E` Exit
 
 `C` Exit Creepy
+
+`D` Door
