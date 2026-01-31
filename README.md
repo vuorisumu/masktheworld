@@ -19,3 +19,7 @@
 `Ä` Creepy Hole
 
 `Ö` Creepy Hole Edge
+
+`E` Exit
+
+`C` Exit Creepy

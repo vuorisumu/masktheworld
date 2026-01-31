@@ -30,6 +30,10 @@ export const getBlockSprite = (name: string) => {
       return normal_hole_edge;
     case "chole":
       return creepy_hole_edge;
+    case "exit":
+      return normal_floor;
+    case "cexit":
+      return creepy_floor;
     default:
       return normal_floor;
   }

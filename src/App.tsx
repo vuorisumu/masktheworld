@@ -50,6 +50,10 @@ function App() {
                       return { solid: false, name: "ehole", fall: true };
                     case "Ö":
                       return { solid: false, name: "chole", fall: true };
+                    case "E":
+                      return { solid: false, name: "exit", fall: false };
+                    case "C":
+                      return { solid: false, name: "cexit", fall: false };
                     default:
                       return { solid: false, name: "floor", fall: false };
                   }
