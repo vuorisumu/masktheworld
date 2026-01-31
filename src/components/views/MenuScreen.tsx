@@ -6,8 +6,11 @@ export default function MenuScreen() {
   return (
     <div>
       <p>Täältä alotetaan peli</p>
-      <button type="button" onClick={() => changeScene("game")}>
+      <button type='button' onClick={() => changeScene("game")}>
         GAME ON
+      </button>
+      <button type='button' onClick={() => changeScene("settings")}>
+        SET THINGS
       </button>
     </div>
   );

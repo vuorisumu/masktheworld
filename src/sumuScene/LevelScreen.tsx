@@ -13,7 +13,9 @@ export default function LevelScreen() {
   };
 
   return (
-    <LevelContext.Provider value={{ playerPos, setPlayerPos, currentMap, getBlock }}>
+    <LevelContext.Provider
+      value={{ playerPos, setPlayerPos, currentMap, getBlock }}
+    >
       <Test />
     </LevelContext.Provider>
   );

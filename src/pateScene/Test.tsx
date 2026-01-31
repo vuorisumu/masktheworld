@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
 import { useLevelContext } from "../utils/LevelContext";
 import type { Block } from "../utils/types";
@@ -15,48 +15,61 @@ export default function Test() {
     x: 3,
     y: 3,
     pastX: 3,
-    pastY: 3,
+    pastY: 3
   });
   const [map, setMap] = useState<Block[][]>([[]]);
 
-  const { currentMap } = useLevelContext();
+  const { currentMap, getBlock } = useLevelContext();
   const width: number = 8;
   const height: number = 8;
+  const playerRight: boolean = useMemo(
+    () =>
+      currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
+    [currentMap, player.x, player.y]
+  );
+  //console.log(currentMap);
+
+  function canPlayerMove(direction: "up" | "down" | "right" | "left") {
+    switch (direction) {
+      case "right":
+        //console.log(getBlock(2, 2));
+        if (player.x < width - 1 && !playerRight) return true;
+        return false;
+    }
+  }
 
   const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
     switch (direction) {
       case "right":
-        console.warn(currentMap);
         setPlayer({
           ...player,
-          pastX: player.x < width - 1 ? player.x : player.pastX,
+          pastX: canPlayerMove(direction) ? player.x : player.pastX,
 
-          x:
-            player.x < width - 1
-              ? // eslint-disable-next-line react-hooks/immutability
-                (player.x += 1)
-              : player.x,
+          x: canPlayerMove(direction)
+            ? // eslint-disable-next-line react-hooks/immutability
+              (player.x += 1)
+            : player.x
         });
         break;
       case "left":
         setPlayer({
           ...player,
           pastX: player.x > 0 ? player.x : player.pastX,
-          x: player.x > 0 ? (player.x -= 1) : player.x,
+          x: player.x > 0 ? (player.x -= 1) : player.x
         });
         break;
       case "down":
         setPlayer({
           ...player,
           pastY: player.y < height - 1 ? player.y : player.pastY,
-          y: player.y < height - 1 ? (player.y += 1) : player.y,
+          y: player.y < height - 1 ? (player.y += 1) : player.y
         });
         break;
       case "up":
         setPlayer({
           ...player,
           pastY: player.y > 0 ? player.y : player.pastY,
-          y: player.y > 0 ? (player.y -= 1) : player.y,
+          y: player.y > 0 ? (player.y -= 1) : player.y
         });
         break;
     }

@@ -20,14 +20,18 @@ export default function GameScreen() {
   };
 
   const quitGame = () => {
-    changeScene("start");
+    changeScene("menu");
   };
 
   return (
     <GameContext.Provider value={{ mask, setMask, stage, stageUp, stageDown }}>
       <MaskButtons />
       <LevelScreen />
-      <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
+      <ButtonPrompt
+        buttonText='Luovuta'
+        onConfirm={quitGame}
+        promptText='U SURE??'
+      />
     </GameContext.Provider>
   );
 }
