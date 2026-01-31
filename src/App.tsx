@@ -14,7 +14,9 @@ function App() {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" }
+      { stage: 1, mask: "other", file: "maskedLevel" },
+      { stage: 2, mask: "normal", file: "stage9base" },
+      { stage: 2, mask: "normal", file: "stage9masked" }
     ];
 
     const loadMaps = async () => {
@@ -55,13 +57,37 @@ function App() {
                     case "C":
                       return { id, solid: false, name: "cexit", fall: false };
                     case "D":
-                      return { id, solid: true, name: "door", fall: false, activated: false };
+                      return {
+                        id,
+                        solid: true,
+                        name: "door",
+                        fall: false,
+                        activated: false
+                      };
                     case "B":
-                      return { id, solid: true, name: "cdoor", fall: false, activated: false };
+                      return {
+                        id,
+                        solid: true,
+                        name: "cdoor",
+                        fall: false,
+                        activated: false
+                      };
                     case "*":
-                      return { id, solid: false, name: "button", fall: false, activated: false };
+                      return {
+                        id,
+                        solid: false,
+                        name: "button",
+                        fall: false,
+                        activated: false
+                      };
                     case "^":
-                      return { id, solid: false, name: "cbutton", fall: false, activated: false };
+                      return {
+                        id,
+                        solid: false,
+                        name: "cbutton",
+                        fall: false,
+                        activated: false
+                      };
                     default:
                       return { id, solid: false, name: "floor", fall: false };
                   }

@@ -10,6 +10,12 @@ export type Position = {
   y: number;
 };
 
+export type PlayerSpawn = {
+  level: number;
+  x: number;
+  y: number;
+};
+
 export type Block = {
   id: string;
   solid: boolean;

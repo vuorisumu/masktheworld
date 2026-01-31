@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
 import { useGameContext } from "../utils/GameContext";
 import type { Position } from "../utils/types";
+import { playerSpawns } from "../utils/playerSpawns";
 
 interface PlayerProps {
   x: number;
@@ -23,10 +24,10 @@ export default function Test({ onChange }: Props) {
   const [disablePlayer, setDisablePlayer] = useState<boolean>(false);
   const [animate, setAnimate] = useState<"idle" | "fall">("idle");
 
-  const { currentStageItems, getBlock, setItemPos, currentMap } =
+  const { currentStageItems, getBlock, setItemPos, currentMap, stage } =
     useGameContext();
-  const width: number = 8;
-  const height: number = 8;
+  const width: number = useMemo(() => currentMap[0].length, [currentMap]);
+  const height: number = useMemo(() => currentMap.length, [currentMap]);
 
   useEffect(() => {
     if (getBlock(player.y, player.x).fall) {
@@ -37,6 +38,14 @@ export default function Test({ onChange }: Props) {
   useEffect(() => {
     onChange(player);
   }, [player]);
+
+  useEffect(() => {
+    if (stage) {
+      const spawn = playerSpawns.find((s) => s.level === stage);
+      if (!spawn) return;
+      setPlayer({ ...player, x: spawn.x, y: spawn.y });
+    }
+  }, [stage]);
 
   const canPlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {
@@ -194,7 +203,6 @@ export default function Test({ onChange }: Props) {
   const handlePlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {
       if (disablePlayer) return;
-      console.log(currentStageItems);
       switch (direction) {
         case "right":
           setPlayer({
@@ -230,7 +238,9 @@ export default function Test({ onChange }: Props) {
   );
 
   const resetPlayer = () => {
-    setPlayer({ ...player, x: 3, y: 3 });
+    const spawn = playerSpawns.find((s) => s.level === stage);
+    if (!spawn) return;
+    setPlayer({ ...player, x: spawn.x, y: spawn.y });
     setDisablePlayer(false);
   };
 

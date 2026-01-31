@@ -11,7 +11,9 @@ export function useGetMap(): Block[][] {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" }
+      { stage: 1, mask: "other", file: "maskedLevel" },
+      { stage: 2, mask: "normal", file: "stage9base" },
+      { stage: 2, mask: "other", file: "stage9masked" }
     ];
 
     const loadMaps = async () => {
