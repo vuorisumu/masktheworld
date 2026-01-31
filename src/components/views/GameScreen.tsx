@@ -5,11 +5,13 @@ import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
 import { type Block, type MapType, type MaskType } from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
+import Clock from "../Clock";
 
 export default function GameScreen() {
   const [mask, setMask] = useState<MaskType>("normal");
   const [stage, setStage] = useState(0);
   const { changeScene, allMaps } = useAppContext();
+  const [tick, setTick] = useState(0);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -42,12 +44,17 @@ export default function GameScreen() {
     changeScene("menu");
   };
 
+  const addTick = () => {
+    setTick((prev) => prev + 1);
+  };
+
   return (
     <GameContext.Provider
       value={{ mask, setMask, stage, stageUp, stageDown, currentMap, currentStageMaps, getBlock }}
     >
+      <Clock refresh={tick} />
       <MaskButtons />
-      <Test />
+      <Test onChange={() => addTick()} />
       <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
     </GameContext.Provider>
   );
