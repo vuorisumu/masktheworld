@@ -1,5 +1,5 @@
 import { useEffect, type CSSProperties } from "react";
-import { useLevelContext } from "../utils/LevelContext";
+import { useGameContext } from "../utils/GameContext";
 import type { Position } from "../utils/types";
 import GridBlock from "./GridBlock";
 
@@ -7,14 +7,14 @@ type Props = {
   playerPos: { x: number; y: number };
 };
 export default function LevelGrid({ playerPos }: Props) {
-  const { currentMap } = useLevelContext();
+  const { currentMap, getBlock } = useGameContext();
 
   const samePos = (a: Position, b: Position) => {
     return a.x === b.x && a.y === b.y;
   };
 
   useEffect(() => {
-    console.log(playerPos);
+    console.log(playerPos, getBlock(playerPos.x, playerPos.y));
   }, [playerPos]);
 
   return (
