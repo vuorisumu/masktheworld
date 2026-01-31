@@ -4,6 +4,7 @@ import type { Position } from "../utils/types";
 import GridBlock from "./GridBlock";
 import PlayerTile from "./PlayerTile";
 import BoxSpr from "../assets/Spr_Box.png";
+import KeySpr from "../assets/Spr_Key.png";
 
 type Props = {
   playerPos: { x: number; y: number };
@@ -141,6 +142,8 @@ const getItemSprite = (name: string) => {
   switch (name) {
     case "box":
       return BoxSpr;
+    case "key":
+      return KeySpr;
     default:
       return BoxSpr;
       break;
