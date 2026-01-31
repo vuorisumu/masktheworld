@@ -32,9 +32,24 @@ export default function Test() {
   function canPlayerMove(direction: "up" | "down" | "right" | "left") {
     switch (direction) {
       case "right":
-        console.log(getBlock(7, 0));
-        if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid)
+        if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
           return true;
+        }
+        return false;
+      case "left":
+        if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
+          return true;
+        }
+        return false;
+      case "up":
+        if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
+          return true;
+        }
+        return false;
+      case "down":
+        if (player.y < height - 1 && !getBlock(player.y + 1, player.x).solid) {
+          return true;
+        }
         return false;
     }
   }
@@ -55,22 +70,22 @@ export default function Test() {
       case "left":
         setPlayer({
           ...player,
-          pastX: player.x > 0 ? player.x : player.pastX,
-          x: player.x > 0 ? (player.x -= 1) : player.x
+          pastX: canPlayerMove(direction) ? player.x : player.pastX,
+          x: canPlayerMove(direction) ? (player.x -= 1) : player.x
         });
         break;
       case "down":
         setPlayer({
           ...player,
-          pastY: player.y < height - 1 ? player.y : player.pastY,
-          y: player.y < height - 1 ? (player.y += 1) : player.y
+          pastY: canPlayerMove(direction) ? player.y : player.pastY,
+          y: canPlayerMove(direction) ? (player.y += 1) : player.y
         });
         break;
       case "up":
         setPlayer({
           ...player,
-          pastY: player.y > 0 ? player.y : player.pastY,
-          y: player.y > 0 ? (player.y -= 1) : player.y
+          pastY: canPlayerMove(direction) ? player.y : player.pastY,
+          y: canPlayerMove(direction) ? (player.y -= 1) : player.y
         });
         break;
     }
