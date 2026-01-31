@@ -1,11 +1,10 @@
+import GameScreen from "../components/views/GameScreen";
 import MenuScreen from "../components/views/MenuScreen";
-import GameScreen from "./GameScreen";
+import { useAppContext } from "../utils/AppContext";
 
-type Props = {
-  tabName: string;
-};
-export default function ScreenHandler({ tabName }: Props) {
-  switch (tabName) {
+export default function ScreenHandler() {
+  const { screen } = useAppContext();
+  switch (screen) {
     case "start":
       return <MenuScreen />;
     case "game":
