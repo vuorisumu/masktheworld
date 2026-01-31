@@ -47,9 +47,12 @@ export default function Test({ onChange }: Props) {
             );
 
             if (blockItem && blockItem.item === "box") {
-              if (player.x < width && !getBlock(player.y, player.x + 2).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x + 2, player.y);
+              if (player.x < width) {
+                if (!getBlock(player.y, player.x + 2).solid) {
+                  setItemPos(blockItem.id, player.x + 2, player.y);
+                } else {
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -65,9 +68,12 @@ export default function Test({ onChange }: Props) {
             );
 
             if (blockItem && blockItem.item === "box") {
-              if (player.x < width && !getBlock(player.y, player.x - 2).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x - 2, player.y);
+              if (player.x < width) {
+                if (!getBlock(player.y, player.x - 2).solid) {
+                  setItemPos(blockItem.id, player.x - 2, player.y);
+                } else {
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -83,9 +89,12 @@ export default function Test({ onChange }: Props) {
             );
 
             if (blockItem && blockItem.item === "box") {
-              if (player.y > 1 && !getBlock(player.y - 2, player.x).solid) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x, player.y - 2);
+              if (player.y > 1) {
+                if (!getBlock(player.y - 2, player.x).solid) {
+                  setItemPos(blockItem.id, player.x, player.y - 2);
+                } else {
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
@@ -104,12 +113,12 @@ export default function Test({ onChange }: Props) {
             );
 
             if (blockItem && blockItem.item === "box") {
-              if (
-                player.y < height - 2 &&
-                !getBlock(player.y + 2, player.x).solid
-              ) {
-                console.log("move box");
-                setItemPos(blockItem.id, player.x, player.y + 2);
+              if (player.y < height - 1) {
+                if (!getBlock(player.y + 2, player.x).solid) {
+                  setItemPos(blockItem.id, player.x, player.y + 2);
+                } else {
+                  setItemPos(blockItem.id, player.x, player.y);
+                }
                 return true;
               } else {
                 return false;
