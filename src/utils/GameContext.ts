@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { Block, MapType, MaskType } from "./types";
+import type { Block, ItemType, MapType, MaskType } from "./types";
 
 interface GameContextType {
   mask: MaskType;
@@ -9,6 +9,7 @@ interface GameContextType {
   stageDown: () => void;
   currentMap: Block[][];
   currentStageMaps: MapType[];
+  currentStageItems?: ItemType[];
   getBlock: (x: number, y: number) => Block;
   setItemPos: (id: number, x: number, y: number) => void;
 }
