@@ -38,9 +38,21 @@ export default function GameScreen() {
   }, [stage, mask, allItems]);
 
   const getBlock = (x: number, y: number) => {
-    const hasItem = currentStageItems.find((i) => i.x === x && i.y === y);
-    if (hasItem) console.log("HAS ITEM!!!!");
+    const itemFound = currentStageItems.find((i) => i.x === x && i.y === y);
+    if (itemFound) {
+      const curr = currentMap[x][y];
+      return { ...curr, item: { id: itemFound.id, name: itemFound.item } };
+    }
     return currentMap[x][y];
+  };
+
+  const setItemPos = (itemID: number, x: number, y: number) => {
+    setAllItems((prev) =>
+      prev.map((m) => {
+        if (m.id === itemID) return { ...m, x, y };
+        return m;
+      }),
+    );
   };
 
   const stageUp = () => {
@@ -61,7 +73,17 @@ export default function GameScreen() {
 
   return (
     <GameContext.Provider
-      value={{ mask, setMask, stage, stageUp, stageDown, currentMap, currentStageMaps, getBlock }}
+      value={{
+        mask,
+        setMask,
+        stage,
+        stageUp,
+        stageDown,
+        currentMap,
+        currentStageMaps,
+        getBlock,
+        setItemPos,
+      }}
     >
       <Clock refresh={tick} />
       <MaskButtons />

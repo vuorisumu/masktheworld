@@ -14,6 +14,7 @@ export type Block = {
   solid: boolean;
   name: string;
   fall: boolean;
+  item?: { id: number; name: string };
 };
 
 export type MapType = {
