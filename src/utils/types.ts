@@ -13,6 +13,7 @@ export type Position = {
 export type Block = {
   solid: boolean;
   name: string;
+  fall: boolean;
 };
 
 export type MapType = {

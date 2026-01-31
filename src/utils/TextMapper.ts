@@ -11,7 +11,7 @@ export function useGetMap(): Block[][] {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" },
+      { stage: 1, mask: "other", file: "maskedLevel" }
     ];
 
     const loadMaps = async () => {
@@ -30,17 +30,17 @@ export function useGetMap(): Block[][] {
                   console.log(col);
                   switch (col) {
                     case "X":
-                      return { solid: true, name: "wall" };
+                      return { solid: true, name: "wall", fall: false };
                     case "-":
-                      return { solid: false, name: "floor" };
+                      return { solid: false, name: "floor", fall: false };
                     default:
-                      return { solid: false, name: "floor" };
+                      return { solid: false, name: "floor", fall: false };
                   }
-                }),
+                })
             );
 
           return { ...map, level };
-        }),
+        })
       );
 
       setAllMaps(loaded);

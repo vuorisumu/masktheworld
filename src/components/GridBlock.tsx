@@ -6,16 +6,17 @@ import PlayerTile from "./PlayerTile";
 type Props = {
   block: Block;
   hasPlayer?: boolean;
+  size: number;
 };
-export default function GridBlock({ block, hasPlayer }: Props) {
+export default function GridBlock({ block, hasPlayer, size }: Props) {
   return (
     <div
       style={{
         position: "relative",
-        width: "36px",
-        height: "36px",
+        width: `${size}px`,
+        height: `${size}px`,
         // border: "1px solid white",
-        backgroundColor: block.solid ? "grey" : "black",
+        backgroundColor: block.solid ? "grey" : "black"
       }}
     >
       <div>
@@ -29,11 +30,9 @@ export default function GridBlock({ block, hasPlayer }: Props) {
             top: 0,
             width: "100%",
             height: "100%",
-            zIndex: 3,
+            zIndex: 3
           }}
-        >
-          <PlayerTile />
-        </div>
+        ></div>
       )}
     </div>
   );
@@ -42,6 +41,6 @@ export default function GridBlock({ block, hasPlayer }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   image: {
     width: "100%",
-    height: "100%",
-  },
+    height: "100%"
+  }
 };

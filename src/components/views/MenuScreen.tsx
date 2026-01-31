@@ -1,7 +1,9 @@
 import { useAppContext } from "../../utils/AppContext";
+import useMusic from "../../utils/useMusic";
 
 export default function MenuScreen() {
   const { changeScene } = useAppContext();
+  const { playClick } = useMusic();
 
   return (
     <div>
@@ -9,7 +11,21 @@ export default function MenuScreen() {
       <button type='button' onClick={() => changeScene("game")}>
         GAME ON
       </button>
-      <button type='button' onClick={() => changeScene("settings")}>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          playClick();
+        }}
+      >
+        Test
+      </button>
+      <button
+        type='button'
+        onClick={() => {
+          playClick();
+          changeScene("settings");
+        }}
+      >
         SET THINGS
       </button>
     </div>
