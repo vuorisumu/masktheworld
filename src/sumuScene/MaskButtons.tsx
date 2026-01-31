@@ -18,6 +18,7 @@ export default function MaskButtons() {
     <div>
       <div>
         <h3>For testing levels:</h3>
+        <p>Current level: {stage}</p>
         <button type="button" onClick={() => stageUp()}>
           +
         </button>
