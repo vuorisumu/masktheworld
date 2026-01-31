@@ -27,10 +27,6 @@ export default function GameScreen() {
     <GameContext.Provider value={{ mask, setMask, stage, stageUp, stageDown }}>
       <MaskButtons />
       <LevelScreen />
-
-      <div>
-        <p>Morjesta pöytään</p>
-      </div>
       <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
     </GameContext.Provider>
   );
