@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
-import type { Block } from "../utils/types";
 import { useGameContext } from "../utils/GameContext";
+import type { Position } from "../utils/types";
 
 interface PlayerProps {
   x: number;
@@ -10,7 +10,10 @@ interface PlayerProps {
   pastY: number;
 }
 
-export default function Test() {
+type Props = {
+  onChange: (playerPos: Position) => void;
+};
+export default function Test({ onChange }: Props) {
   const [player, setPlayer] = useState<PlayerProps>({
     x: 3,
     y: 3,
@@ -28,6 +31,10 @@ export default function Test() {
       alert("Fell!!!");
     }
   }, [player.x, player.y, getBlock]);
+
+  useEffect(() => {
+    onChange(player);
+  }, [player]);
 
   const canPlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {

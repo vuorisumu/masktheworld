@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import { useGameContext } from "../utils/GameContext";
 import type { Position } from "../utils/types";
 import GridBlock from "./GridBlock";
@@ -7,15 +7,11 @@ type Props = {
   playerPos: { x: number; y: number };
 };
 export default function LevelGrid({ playerPos }: Props) {
-  const { currentMap, getBlock } = useGameContext();
+  const { currentMap } = useGameContext();
 
   const samePos = (a: Position, b: Position) => {
     return a.x === b.x && a.y === b.y;
   };
-
-  // useEffect(() => {
-  //   console.log(playerPos, getBlock(playerPos.y, playerPos.x + 1));
-  // }, [playerPos]);
 
   return (
     <div>
@@ -23,10 +19,7 @@ export default function LevelGrid({ playerPos }: Props) {
         <div key={i} style={styles.row}>
           {row.map((col, j) => (
             <div key={j} style={styles.col}>
-              <GridBlock
-                block={col}
-                hasPlayer={samePos({ x: j, y: i }, playerPos)}
-              />
+              <GridBlock block={col} hasPlayer={samePos({ x: j, y: i }, playerPos)} />
             </div>
           ))}
         </div>
@@ -37,10 +30,15 @@ export default function LevelGrid({ playerPos }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   row: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   col: {
     display: "flex",
-    flexDirection: "column"
-  }
+    flexDirection: "column",
+  },
+  layer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
 };
