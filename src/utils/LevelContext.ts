@@ -13,8 +13,8 @@ const defaultContext: LevelContextType = {
   setPlayerPos: () => {},
   currentMap: [[]],
   getBlock: () => {
-    return { solid: true, name: "wall" };
-  },
+    return { solid: true, name: "wall", fall: false };
+  }
 };
 
 const LevelContext = createContext<LevelContextType>(defaultContext);

@@ -17,17 +17,17 @@ export default function Test() {
     pastX: 3,
     pastY: 3
   });
+  const [disablePlayer, setDisablePlayer] = useState<boolean>(false);
 
   const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
   const height: number = 8;
 
-  // const playerRight: boolean = useMemo(
-  //   () =>
-  //     currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
-  //   [currentMap, player.x, player.y]
-  // );
-  //console.log(currentMap);
+  useEffect(() => {
+    if (getBlock(player.y, player.x).fall) {
+      alert("Fell!!!");
+    }
+  }, [player.x, player.y, getBlock]);
 
   const canPlayerMove = useCallback(
     (direction: "up" | "down" | "right" | "left") => {
