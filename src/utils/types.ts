@@ -21,3 +21,12 @@ export type MapType = {
   file: string;
   level?: Block[][];
 };
+
+export type ItemType = {
+  id: number;
+  level: number;
+  mask: MaskType;
+  item: string;
+  x: number;
+  y: number;
+};

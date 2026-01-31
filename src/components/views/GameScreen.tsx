@@ -3,7 +3,7 @@ import Test from "../../pateScene/Test";
 import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
-import { type Block, type MapType, type MaskType } from "../../utils/types";
+import { type Block, type ItemType, type MapType, type MaskType } from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
 import Clock from "../Clock";
 
@@ -12,6 +12,10 @@ export default function GameScreen() {
   const [stage, setStage] = useState(0);
   const { changeScene, allMaps } = useAppContext();
   const [tick, setTick] = useState(0);
+  const [allItems, setAllItems] = useState<ItemType[]>([
+    { id: 1, item: "box", x: 2, y: 2, level: 0, mask: "normal" },
+    { id: 2, item: "box", x: 3, y: 2, level: 0, mask: "other" },
+  ]);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -28,7 +32,14 @@ export default function GameScreen() {
     return [[]];
   }, [stage, mask, allMaps]);
 
+  const currentStageItems = useMemo<ItemType[]>(() => {
+    const matches = allItems.filter((m) => m.level === stage && m.mask === mask);
+    return matches;
+  }, [stage, mask, allItems]);
+
   const getBlock = (x: number, y: number) => {
+    const hasItem = currentStageItems.find((i) => i.x === x && i.y === y);
+    if (hasItem) console.log("HAS ITEM!!!!");
     return currentMap[x][y];
   };
 
