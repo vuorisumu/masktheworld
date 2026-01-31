@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
 import { useLevelContext } from "../utils/LevelContext";
 import type { Block } from "../utils/types";
+import { useGameContext } from "../utils/GameContext";
 
 interface PlayerProps {
   x: number;
@@ -17,23 +18,23 @@ export default function Test() {
     pastX: 3,
     pastY: 3
   });
-  const [map, setMap] = useState<Block[][]>([[]]);
 
-  const { currentMap, getBlock } = useLevelContext();
+  const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
   const height: number = 8;
-  const playerRight: boolean = useMemo(
-    () =>
-      currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
-    [currentMap, player.x, player.y]
-  );
+  // const playerRight: boolean = useMemo(
+  //   () =>
+  //     currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
+  //   [currentMap, player.x, player.y]
+  // );
   //console.log(currentMap);
 
   function canPlayerMove(direction: "up" | "down" | "right" | "left") {
     switch (direction) {
       case "right":
-        //console.log(getBlock(2, 2));
-        if (player.x < width - 1 && !playerRight) return true;
+        console.log(getBlock(7, 0));
+        if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid)
+          return true;
         return false;
     }
   }
