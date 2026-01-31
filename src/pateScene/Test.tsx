@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLevelContext } from "../utils/LevelContext";
 
 interface PlayerProps {
   x: number;
@@ -10,30 +11,33 @@ export default function Test() {
   const height: number = 15;
   const [player, setPlayer] = useState<PlayerProps>({ x: 0, y: 0 });
 
+  const { currentMap } = useLevelContext();
+
   const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
     switch (direction) {
       case "right":
         setPlayer({
           ...player,
-          x: player.x < width - 1 ? (player.x += 1) : player.x
+          // eslint-disable-next-line react-hooks/immutability
+          x: player.x < width - 1 ? (player.x += 1) : player.x,
         });
         break;
       case "left":
         setPlayer({
           ...player,
-          x: player.x > 0 ? (player.x -= 1) : player.x
+          x: player.x > 0 ? (player.x -= 1) : player.x,
         });
         break;
       case "down":
         setPlayer({
           ...player,
-          y: player.y < height - 1 ? (player.y += 1) : player.y
+          y: player.y < height - 1 ? (player.y += 1) : player.y,
         });
         break;
       case "up":
         setPlayer({
           ...player,
-          y: player.y > 0 ? (player.y -= 1) : player.y
+          y: player.y > 0 ? (player.y -= 1) : player.y,
         });
         break;
     }
@@ -76,10 +80,7 @@ export default function Test() {
             {Array(width)
               .fill(null)
               .map((_, j) => (
-                <div
-                  key={j}
-                  style={{ display: "flex", flexDirection: "column" }}
-                >
+                <div key={j} style={{ display: "flex", flexDirection: "column" }}>
                   <GridBlock player={i === player.y && j === player.x} />
                 </div>
               ))}
@@ -96,7 +97,7 @@ function GridBlock({ player }: { player: boolean }) {
         width: "18px",
         height: "18px",
         border: "1px solid white",
-        backgroundColor: player ? "green" : "transparent"
+        backgroundColor: player ? "green" : "transparent",
       }}
     ></div>
   );
