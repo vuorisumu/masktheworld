@@ -6,6 +6,8 @@ export function useGetMap(): Block[][] {
   const { mask, stage } = useGameContext();
   const allMaps = useMemo<MapType[]>(() => {
     return [
+      { stage: 0, mask: "normal", file: "stage0base" },
+      { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
       { stage: 1, mask: "other", file: "maskedLevel" },
     ];
@@ -34,7 +36,7 @@ export function useGetMap(): Block[][] {
     return mapArr;
   }, [allMaps]);
 
-  const currentMap = useMemo<Block[][]>(() => {
+  return useMemo<Block[][]>(() => {
     const match = maps.find((m) => m.stage === stage && m.mask === mask);
     if (match && match.level) {
       console.log("Currently used level has changed", match);
@@ -44,6 +46,4 @@ export function useGetMap(): Block[][] {
     }
     return [[]];
   }, [stage, mask, maps]);
-
-  return currentMap;
 }
