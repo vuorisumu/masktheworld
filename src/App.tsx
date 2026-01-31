@@ -35,8 +35,14 @@ function App() {
                       return { solid: true, name: "wall" };
                     case "T":
                       return { solid: true, name: "topwall" };
+                    case "M":
+                      return { solid: true, name: "cwall" };
+                    case "Y":
+                      return { solid: true, name: "ctopwall" };
                     case "-":
                       return { solid: false, name: "floor" };
+                    case ".":
+                      return { solid: false, name: "cfloor" };
                     default:
                       return { solid: false, name: "floor" };
                   }
