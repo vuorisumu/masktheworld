@@ -1,8 +1,8 @@
 import { useState } from "react";
-import GameContext from "../utils/GameContext";
-import type { MaskType } from "../utils/types";
-import LevelScreen from "./LevelScreen";
-import MaskButtons from "./MaskButtons";
+import LevelScreen from "../../sumuScene/LevelScreen";
+import MaskButtons from "../../sumuScene/MaskButtons";
+import GameContext from "../../utils/GameContext";
+import type { MaskType } from "../../utils/types";
 
 export default function GameScreen() {
   const [mask, setMask] = useState<MaskType>("normal");

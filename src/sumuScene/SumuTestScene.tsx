@@ -1,4 +1,4 @@
-import GameScreen from "./GameScreen";
+import GameScreen from "../components/views/GameScreen";
 
 export default function SumuTestScene() {
   return (

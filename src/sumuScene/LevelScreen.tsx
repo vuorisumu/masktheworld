@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import Test from "../pateScene/Test";
 import LevelContext from "../utils/LevelContext";
 import { useGetMap } from "../utils/TextMapper";
 import { type Block, type Position } from "../utils/types";
@@ -23,6 +24,8 @@ export default function LevelScreen() {
   }, [mapTest]);
 
   return (
-    <LevelContext.Provider value={{ playerPos, setPlayerPos, currentMap }}></LevelContext.Provider>
+    <LevelContext.Provider value={{ playerPos, setPlayerPos, currentMap }}>
+      <Test />
+    </LevelContext.Provider>
   );
 }

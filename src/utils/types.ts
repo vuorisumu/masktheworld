@@ -1,3 +1,4 @@
+export type ScreenName = "start" | "game";
 export type MaskType = "normal" | "other" | "best";
 export type Mask = {
   name: MaskType;

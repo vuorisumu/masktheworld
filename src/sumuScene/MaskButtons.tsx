@@ -24,7 +24,11 @@ export default function MaskButtons() {
       {allMasks
         .filter((m) => m.level <= stage)
         .map((maskOption) => (
-          <button type="button" onClick={() => changeMask(maskOption.name)}>
+          <button
+            type="button"
+            onClick={() => changeMask(maskOption.name)}
+            key={`btn-${maskOption.name}`}
+          >
             {mask === maskOption.name && "In use"}
             {maskOption.name}
           </button>
