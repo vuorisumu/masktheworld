@@ -1,43 +1,61 @@
 import { useEffect, useState } from "react";
 import { useLevelContext } from "../utils/LevelContext";
+import type { Block } from "../utils/types";
 
 interface PlayerProps {
   x: number;
   y: number;
+  pastX: number;
+  pastY: number;
 }
 
 export default function Test() {
-  const width: number = 30;
-  const height: number = 15;
-  const [player, setPlayer] = useState<PlayerProps>({ x: 0, y: 0 });
+  const [player, setPlayer] = useState<PlayerProps>({
+    x: 3,
+    y: 3,
+    pastX: 3,
+    pastY: 3
+  });
+  const [map, setMap] = useState<Block[][]>([[]]);
 
   const { currentMap } = useLevelContext();
+  const width: number = 8;
+  const height: number = 8;
 
   const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
     switch (direction) {
       case "right":
+        console.warn(currentMap);
         setPlayer({
           ...player,
-          // eslint-disable-next-line react-hooks/immutability
-          x: player.x < width - 1 ? (player.x += 1) : player.x,
+          pastX: player.x < width - 1 ? player.x : player.pastX,
+
+          x:
+            player.x < width - 1
+              ? // eslint-disable-next-line react-hooks/immutability
+                (player.x += 1)
+              : player.x
         });
         break;
       case "left":
         setPlayer({
           ...player,
-          x: player.x > 0 ? (player.x -= 1) : player.x,
+          pastX: player.x > 0 ? player.x : player.pastX,
+          x: player.x > 0 ? (player.x -= 1) : player.x
         });
         break;
       case "down":
         setPlayer({
           ...player,
-          y: player.y < height - 1 ? (player.y += 1) : player.y,
+          pastY: player.y < height - 1 ? player.y : player.pastY,
+          y: player.y < height - 1 ? (player.y += 1) : player.y
         });
         break;
       case "up":
         setPlayer({
           ...player,
-          y: player.y > 0 ? (player.y -= 1) : player.y,
+          pastY: player.y > 0 ? player.y : player.pastY,
+          y: player.y > 0 ? (player.y -= 1) : player.y
         });
         break;
     }
@@ -73,32 +91,45 @@ export default function Test() {
 
   return (
     <div>
-      {Array(height)
-        .fill(null)
-        .map((_, i) => (
-          <div key={i} style={{ display: "flex", flexDirection: "row" }}>
-            {Array(width)
-              .fill(null)
-              .map((_, j) => (
-                <div key={j} style={{ display: "flex", flexDirection: "column" }}>
-                  <GridBlock player={i === player.y && j === player.x} />
-                </div>
-              ))}
-          </div>
-        ))}
+      {currentMap.map((xAxis, i) => (
+        <div key={i} style={{ display: "flex", flexDirection: "row" }}>
+          {xAxis.map((yAxis, j) => (
+            <div key={j} style={{ display: "flex", flexDirection: "column" }}>
+              <GridBlock
+                player={i === player.y && j === player.x}
+                block={currentMap[i][j]}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
 
-function GridBlock({ player }: { player: boolean }) {
+function GridBlock({ player, block }: { player: boolean; block: Block }) {
   return (
     <div
       style={{
-        width: "18px",
-        height: "18px",
+        position: "relative",
+        width: "30px",
+        height: "30px",
         border: "1px solid white",
-        backgroundColor: player ? "green" : "transparent",
+        backgroundColor: block.solid ? "grey" : "black"
       }}
-    ></div>
+    >
+      {player && (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "green"
+          }}
+        ></div>
+      )}
+    </div>
   );
 }
