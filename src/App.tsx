@@ -3,6 +3,7 @@ import "./App.css";
 import ScreenHandler from "./sumuScene/ScreenHandler";
 import AppContext from "./utils/AppContext";
 import { type Block, type MapType, type ScreenName } from "./utils/types";
+import { MusicProvider } from "./pateScene/MusicProvider";
 
 function App() {
   const [screen, setScreen] = useState<ScreenName>("start");
@@ -13,7 +14,7 @@ function App() {
       { stage: 0, mask: "normal", file: "stage0base" },
       { stage: 0, mask: "other", file: "stage0masked" },
       { stage: 1, mask: "normal", file: "mapTest" },
-      { stage: 1, mask: "other", file: "maskedLevel" },
+      { stage: 1, mask: "other", file: "maskedLevel" }
     ];
 
     const loadMaps = async () => {
@@ -46,11 +47,11 @@ function App() {
                     default:
                       return { solid: false, name: "floor" };
                   }
-                }),
+                })
             );
 
           return { ...map, level };
-        }),
+        })
       );
 
       setAllMaps(loaded);
@@ -66,7 +67,9 @@ function App() {
 
   return (
     <AppContext.Provider value={{ screen, changeScene, allMaps }}>
-      <ScreenHandler />
+      <MusicProvider>
+        <ScreenHandler />
+      </MusicProvider>
     </AppContext.Provider>
   );
 }

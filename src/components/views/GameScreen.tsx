@@ -35,7 +35,7 @@ export default function GameScreen() {
   };
 
   const quitGame = () => {
-    changeScene("start");
+    changeScene("menu");
   };
 
   return (
@@ -44,7 +44,11 @@ export default function GameScreen() {
     >
       <MaskButtons />
       <Test />
-      <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
+      <ButtonPrompt
+        buttonText='Luovuta'
+        onConfirm={quitGame}
+        promptText='U SURE??'
+      />
     </GameContext.Provider>
   );
 }

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
 import { useLevelContext } from "../utils/LevelContext";
 import type { Block } from "../utils/types";
+import { useGameContext } from "../utils/GameContext";
 
 interface PlayerProps {
   x: number;
@@ -15,48 +16,76 @@ export default function Test() {
     x: 3,
     y: 3,
     pastX: 3,
-    pastY: 3,
+    pastY: 3
   });
-  const [map, setMap] = useState<Block[][]>([[]]);
 
-  const { currentMap } = useLevelContext();
+  const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
   const height: number = 8;
+  // const playerRight: boolean = useMemo(
+  //   () =>
+  //     currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
+  //   [currentMap, player.x, player.y]
+  // );
+  //console.log(currentMap);
+
+  function canPlayerMove(direction: "up" | "down" | "right" | "left") {
+    switch (direction) {
+      case "right":
+        if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
+          return true;
+        }
+        return false;
+      case "left":
+        if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
+          return true;
+        }
+        return false;
+      case "up":
+        if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
+          return true;
+        }
+        return false;
+      case "down":
+        if (player.y < height - 1 && !getBlock(player.y + 1, player.x).solid) {
+          return true;
+        }
+        return false;
+    }
+  }
 
   const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
     switch (direction) {
       case "right":
-        console.warn(currentMap);
         setPlayer({
           ...player,
-          pastX: player.x < width - 1 ? player.x : player.pastX,
+          pastX: canPlayerMove(direction) ? player.x : player.pastX,
 
-          x:
-            player.x < width - 1
-              ? // eslint-disable-next-line react-hooks/immutability
-                (player.x += 1)
-              : player.x,
+          x: canPlayerMove(direction)
+            ? // eslint-disable-next-line react-hooks/immutability
+              (player.x += 1)
+            : player.x
         });
         break;
       case "left":
         setPlayer({
           ...player,
-          pastX: player.x > 0 ? player.x : player.pastX,
-          x: player.x > 0 ? (player.x -= 1) : player.x,
+          pastX: canPlayerMove(direction) ? player.x : player.pastX,
+          x: canPlayerMove(direction) ? (player.x -= 1) : player.x
         });
         break;
       case "down":
         setPlayer({
           ...player,
-          pastY: player.y < height - 1 ? player.y : player.pastY,
-          y: player.y < height - 1 ? (player.y += 1) : player.y,
+          pastY: canPlayerMove(direction) ? player.y : player.pastY,
+          y: canPlayerMove(direction) ? (player.y += 1) : player.y
         });
         break;
       case "up":
         setPlayer({
           ...player,
-          pastY: player.y > 0 ? player.y : player.pastY,
-          y: player.y > 0 ? (player.y -= 1) : player.y,
+          pastY: canPlayerMove(direction) ? player.y : player.pastY,
+          y: canPlayerMove(direction) ? (player.y -= 1) : player.y
         });
         break;
     }

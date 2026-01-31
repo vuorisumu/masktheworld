@@ -12,10 +12,10 @@ export default function GridBlock({ block, hasPlayer }: Props) {
     <div
       style={{
         position: "relative",
-        width: "30px",
-        height: "30px",
-        border: "1px solid white",
-        backgroundColor: block.solid ? "grey" : "black",
+        width: "36px",
+        height: "36px",
+        // border: "1px solid white",
+        backgroundColor: block.solid ? "grey" : "black"
       }}
     >
       <div>
@@ -28,7 +28,7 @@ export default function GridBlock({ block, hasPlayer }: Props) {
             left: 0,
             top: 0,
             width: "100%",
-            height: "100%",
+            height: "100%"
           }}
         >
           <PlayerTile />
@@ -41,6 +41,6 @@ export default function GridBlock({ block, hasPlayer }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   image: {
     width: "100%",
-    height: "100%",
-  },
+    height: "100%"
+  }
 };

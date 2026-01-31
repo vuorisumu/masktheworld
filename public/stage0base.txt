@@ -1,6 +1,6 @@
 TTTTTTTT
 TXXXXXXT
-T------T
+T-----TT
 T------T
 T------T
 T------T
