@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import LevelGrid from "../components/LevelGrid";
-import { useLevelContext } from "../utils/LevelContext";
 import type { Block } from "../utils/types";
 import { useGameContext } from "../utils/GameContext";
 
@@ -22,6 +21,7 @@ export default function Test() {
   const { currentMap, getBlock } = useGameContext();
   const width: number = 8;
   const height: number = 8;
+
   // const playerRight: boolean = useMemo(
   //   () =>
   //     currentMap[0].length ? getBlock(player.x + 1, player.y).solid : true,
@@ -29,67 +29,72 @@ export default function Test() {
   // );
   //console.log(currentMap);
 
-  function canPlayerMove(direction: "up" | "down" | "right" | "left") {
-    switch (direction) {
-      case "right":
-        if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
-          return true;
-        }
-        return false;
-      case "left":
-        if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
-          return true;
-        }
-        return false;
-      case "up":
-        if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
-          return true;
-        }
-        return false;
-      case "down":
-        if (player.y < height - 1 && !getBlock(player.y + 1, player.x).solid) {
-          return true;
-        }
-        return false;
-    }
-  }
+  const canPlayerMove = useCallback(
+    (direction: "up" | "down" | "right" | "left") => {
+      switch (direction) {
+        case "right":
+          if (player.x < width - 1 && !getBlock(player.y, player.x + 1).solid) {
+            return true;
+          }
+          return false;
+        case "left":
+          if (player.x > 0 && !getBlock(player.y, player.x - 1).solid) {
+            return true;
+          }
+          return false;
+        case "up":
+          if (player.y > 0 && !getBlock(player.y - 1, player.x).solid) {
+            return true;
+          }
+          return false;
+        case "down":
+          if (
+            player.y < height - 1 &&
+            !getBlock(player.y + 1, player.x).solid
+          ) {
+            return true;
+          }
+          return false;
+      }
+    },
+    [getBlock, player.x, player.y]
+  );
 
-  const handlePlayerMove = (direction: "up" | "down" | "right" | "left") => {
-    switch (direction) {
-      case "right":
-        setPlayer({
-          ...player,
-          pastX: canPlayerMove(direction) ? player.x : player.pastX,
-
-          x: canPlayerMove(direction)
-            ? // eslint-disable-next-line react-hooks/immutability
-              (player.x += 1)
-            : player.x
-        });
-        break;
-      case "left":
-        setPlayer({
-          ...player,
-          pastX: canPlayerMove(direction) ? player.x : player.pastX,
-          x: canPlayerMove(direction) ? (player.x -= 1) : player.x
-        });
-        break;
-      case "down":
-        setPlayer({
-          ...player,
-          pastY: canPlayerMove(direction) ? player.y : player.pastY,
-          y: canPlayerMove(direction) ? (player.y += 1) : player.y
-        });
-        break;
-      case "up":
-        setPlayer({
-          ...player,
-          pastY: canPlayerMove(direction) ? player.y : player.pastY,
-          y: canPlayerMove(direction) ? (player.y -= 1) : player.y
-        });
-        break;
-    }
-  };
+  const handlePlayerMove = useCallback(
+    (direction: "up" | "down" | "right" | "left") => {
+      switch (direction) {
+        case "right":
+          setPlayer({
+            ...player,
+            pastX: canPlayerMove(direction) ? player.x : player.pastX,
+            x: canPlayerMove(direction) ? (player.x += 1) : player.x
+          });
+          break;
+        case "left":
+          setPlayer({
+            ...player,
+            pastX: canPlayerMove(direction) ? player.x : player.pastX,
+            x: canPlayerMove(direction) ? (player.x -= 1) : player.x
+          });
+          break;
+        case "down":
+          setPlayer({
+            ...player,
+            pastY: canPlayerMove(direction) ? player.y : player.pastY,
+            y: canPlayerMove(direction) ? (player.y += 1) : player.y
+          });
+          break;
+        case "up":
+          setPlayer({
+            ...player,
+            pastY: canPlayerMove(direction) ? player.y : player.pastY,
+            y: canPlayerMove(direction) ? (player.y -= 1) : player.y
+          });
+          break;
+      }
+    },
+    [canPlayerMove, player]
+  );
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -117,7 +122,7 @@ export default function Test() {
     return () => {
       window.removeEventListener("keyup", handler);
     };
-  }, []);
+  }, [handlePlayerMove]);
 
   return <LevelGrid playerPos={player} />;
 

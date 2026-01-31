@@ -33,19 +33,21 @@ function App() {
                   console.log(col);
                   switch (col) {
                     case "X":
-                      return { solid: true, name: "wall" };
+                      return { solid: true, name: "wall", fall: false };
                     case "T":
-                      return { solid: true, name: "topwall" };
+                      return { solid: true, name: "topwall", fall: false };
                     case "M":
-                      return { solid: true, name: "cwall" };
+                      return { solid: true, name: "cwall", fall: false };
                     case "Y":
-                      return { solid: true, name: "ctopwall" };
+                      return { solid: true, name: "ctopwall", fall: false };
                     case "-":
-                      return { solid: false, name: "floor" };
+                      return { solid: false, name: "floor", fall: false };
                     case ".":
-                      return { solid: false, name: "cfloor" };
+                      return { solid: false, name: "cfloor", fall: false };
+                    case "A":
+                      return { solid: false, name: "pit", fall: true };
                     default:
-                      return { solid: false, name: "floor" };
+                      return { solid: false, name: "floor", fall: false };
                   }
                 })
             );

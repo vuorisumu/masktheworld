@@ -13,9 +13,9 @@ export default function LevelGrid({ playerPos }: Props) {
     return a.x === b.x && a.y === b.y;
   };
 
-  useEffect(() => {
-    console.log(playerPos, getBlock(playerPos.x, playerPos.y));
-  }, [playerPos]);
+  // useEffect(() => {
+  //   console.log(playerPos, getBlock(playerPos.y, playerPos.x + 1));
+  // }, [playerPos]);
 
   return (
     <div>
@@ -23,7 +23,10 @@ export default function LevelGrid({ playerPos }: Props) {
         <div key={i} style={styles.row}>
           {row.map((col, j) => (
             <div key={j} style={styles.col}>
-              <GridBlock block={col} hasPlayer={samePos({ x: j, y: i }, playerPos)} />
+              <GridBlock
+                block={col}
+                hasPlayer={samePos({ x: j, y: i }, playerPos)}
+              />
             </div>
           ))}
         </div>
@@ -34,10 +37,10 @@ export default function LevelGrid({ playerPos }: Props) {
 const styles: { [key: string]: CSSProperties } = {
   row: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "row"
   },
   col: {
     display: "flex",
-    flexDirection: "column",
-  },
+    flexDirection: "column"
+  }
 };
