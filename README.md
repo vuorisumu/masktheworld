@@ -28,14 +28,6 @@
 
 `B` Creepy door
 
-`1` Normal Spike[1]
-
-`2` Creepy spike[1]
-
-`I` Normal Button connected to 1-2
-
-`^` Creepy button
-
 `1` Normal spikes [1]
 
 `2` Creepy spikes [1]
