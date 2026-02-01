@@ -1,11 +1,16 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import logo from "../../assets/Spr_LOGO.png";
 import Test from "../../pateScene/Test";
 import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
 import { initItems } from "../../utils/itemSpawns";
-import { type Block, type ItemType, type MapType, type MaskType } from "../../utils/types";
+import {
+  type Block,
+  type ItemType,
+  type MapType,
+  type MaskType
+} from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
 import Clock from "../Clock";
 
@@ -16,6 +21,8 @@ export default function GameScreen() {
   const [tick, setTick] = useState(0);
   const [allItems, setAllItems] = useState<ItemType[]>(initItems);
   const [interactedBlocks, setInteractedBlocks] = useState<string[]>([]);
+  const [exploded, setExploded] = useState<boolean>(false);
+  const [countStarted, setCountStarted] = useState<number | false>(false);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -33,7 +40,9 @@ export default function GameScreen() {
   }, [stage, mask, allMaps]);
 
   const currentStageItems = useMemo<ItemType[]>(() => {
-    const matches = allItems.filter((m) => m.level === stage && m.mask === mask);
+    const matches = allItems.filter(
+      (m) => m.level === stage && m.mask === mask
+    );
     return matches;
   }, [stage, mask, allItems]);
 
@@ -59,7 +68,7 @@ export default function GameScreen() {
     return {
       ...curr,
       ...(itemFound && { item: { id: itemFound.id, name: itemFound.item } }),
-      ...(arr.includes(curr.name) && { activated }),
+      ...(arr.includes(curr.name) && { activated })
     };
     // if (itemFound) {
     //   const curr = currentMap[x][y];
@@ -73,7 +82,7 @@ export default function GameScreen() {
       prev.map((m) => {
         if (m.id === itemID) return { ...m, x, y };
         return m;
-      }),
+      })
     );
   };
 
@@ -105,10 +114,26 @@ export default function GameScreen() {
     }
   };
 
+  useEffect(() => {
+    const startCountDown = () => {
+      setCountStarted(tick + 1);
+    };
+    const dynam = currentStageItems.find((i) => i.item === "dynamite");
+    if (dynam && !countStarted) {
+      startCountDown();
+    }
+
+    if (countStarted && !exploded && countStarted < tick) {
+      setExploded(true);
+      console.warn("BOOOMMMM");
+    }
+  }, [stage, tick]);
+
   return (
     <GameContext.Provider
       value={{
         mask,
+        tick,
         setMask,
         stage,
         stageUp,
@@ -119,7 +144,7 @@ export default function GameScreen() {
         getBlock,
         setItemPos,
         resetAllItems,
-        activateBlock,
+        activateBlock
       }}
     >
       <div style={styles.menu}>
@@ -128,7 +153,11 @@ export default function GameScreen() {
         <Clock refresh={tick} />
       </div>
       <Test onChange={() => addTick()} />
-      <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
+      <ButtonPrompt
+        buttonText='Luovuta'
+        onConfirm={quitGame}
+        promptText='U SURE??'
+      />
     </GameContext.Provider>
   );
 }
@@ -140,6 +169,6 @@ const styles: { [key: string]: CSSProperties } = {
     height: "100px",
     gap: 20,
     alignContent: "center",
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 };

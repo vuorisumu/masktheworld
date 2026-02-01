@@ -5,6 +5,7 @@ import GridBlock from "./GridBlock";
 import PlayerTile from "./PlayerTile";
 import BoxSpr from "../assets/Spr_Box.png";
 import KeySpr from "../assets/Spr_Key.png";
+import DynamiteSpr from "../assets/Spr_Dynamite.png";
 
 type Props = {
   playerPos: { x: number; y: number };
@@ -29,8 +30,11 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
       const t = setTimeout(() => {
         stageUp();
         resetPlayer();
-        setFade(false);
-      }, 500);
+        const w = setTimeout(() => {
+          setFade(false);
+        }, 150);
+        return () => clearTimeout(w);
+      }, 350);
       return () => clearTimeout(t);
     }
     if (getBlock(playerPos.y, playerPos.x).fall) {
@@ -49,7 +53,7 @@ export default function LevelGrid({ playerPos, anim, resetPlayer }: Props) {
       <div
         style={{
           opacity: fade ? "1" : "0",
-          transition: "opacity 0.5s ease",
+          transition: "opacity 0.35s ease",
           backgroundColor: "black",
           position: "absolute",
           inset: 0,
@@ -144,6 +148,8 @@ const getItemSprite = (name: string) => {
       return BoxSpr;
     case "key":
       return KeySpr;
+    case "dynamite":
+      return DynamiteSpr;
     default:
       return BoxSpr;
       break;
