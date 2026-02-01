@@ -5,12 +5,7 @@ import MaskButtons from "../../sumuScene/MaskButtons";
 import { useAppContext } from "../../utils/AppContext";
 import GameContext from "../../utils/GameContext";
 import { initItems } from "../../utils/itemSpawns";
-import {
-  type Block,
-  type ItemType,
-  type MapType,
-  type MaskType
-} from "../../utils/types";
+import { type Block, type ItemType, type MapType, type MaskType } from "../../utils/types";
 import ButtonPrompt from "../ButtonPrompt";
 import Clock from "../Clock";
 
@@ -40,11 +35,34 @@ export default function GameScreen() {
   }, [stage, mask, allMaps]);
 
   const currentStageItems = useMemo<ItemType[]>(() => {
-    const matches = allItems.filter(
-      (m) => m.level === stage && m.mask === mask
-    );
+    const matches = allItems.filter((m) => m.level === stage && m.mask === mask);
     return matches;
   }, [stage, mask, allItems]);
+
+  const interactableNames = [
+    "spike1",
+    "spike2",
+    "cspike1",
+    "cspike2",
+    "button1",
+    "button2",
+    "cbutton1",
+    "cbutton2",
+    "door",
+    "cdoor",
+  ];
+
+  useEffect(() => {
+    const interactable: Block[] = [];
+    currentStageMaps.forEach((m) => {
+      m.level?.forEach((row) => {
+        row
+          .filter((r) => interactableNames.includes(r.name))
+          .forEach((col) => interactable.push(col));
+      });
+    });
+    console.log(interactable);
+  }, [interactedBlocks]);
 
   const getBlock = (x: number, y: number) => {
     const itemFound = currentStageItems.find((i) => i.x === x && i.y === y);
@@ -68,7 +86,7 @@ export default function GameScreen() {
     return {
       ...curr,
       ...(itemFound && { item: { id: itemFound.id, name: itemFound.item } }),
-      ...(arr.includes(curr.name) && { activated })
+      ...(arr.includes(curr.name) && { activated }),
     };
     // if (itemFound) {
     //   const curr = currentMap[x][y];
@@ -82,7 +100,7 @@ export default function GameScreen() {
       prev.map((m) => {
         if (m.id === itemID) return { ...m, x, y };
         return m;
-      })
+      }),
     );
   };
 
@@ -144,7 +162,7 @@ export default function GameScreen() {
         getBlock,
         setItemPos,
         resetAllItems,
-        activateBlock
+        activateBlock,
       }}
     >
       <div style={styles.menu}>
@@ -153,11 +171,7 @@ export default function GameScreen() {
         <Clock refresh={tick} />
       </div>
       <Test onChange={() => addTick()} />
-      <ButtonPrompt
-        buttonText='Luovuta'
-        onConfirm={quitGame}
-        promptText='U SURE??'
-      />
+      <ButtonPrompt buttonText="Luovuta" onConfirm={quitGame} promptText="U SURE??" />
     </GameContext.Provider>
   );
 }
@@ -169,6 +183,6 @@ const styles: { [key: string]: CSSProperties } = {
     height: "100px",
     gap: 20,
     alignContent: "center",
-    paddingBottom: 10
-  }
+    paddingBottom: 10,
+  },
 };
