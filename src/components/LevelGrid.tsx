@@ -5,6 +5,7 @@ import GridBlock from "./GridBlock";
 import PlayerTile from "./PlayerTile";
 import BoxSpr from "../assets/Spr_Box.png";
 import KeySpr from "../assets/Spr_Key.png";
+import DynamiteSpr from "../assets/Spr_Dynamite.png";
 
 type Props = {
   playerPos: { x: number; y: number };
@@ -147,6 +148,8 @@ const getItemSprite = (name: string) => {
       return BoxSpr;
     case "key":
       return KeySpr;
+    case "dynamite":
+      return DynamiteSpr;
     default:
       return BoxSpr;
       break;
