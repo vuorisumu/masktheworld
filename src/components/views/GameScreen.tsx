@@ -18,6 +18,7 @@ export default function GameScreen() {
   const [interactedBlocks, setInteractedBlocks] = useState<string[]>([]);
   const [exploded, setExploded] = useState<boolean>(false);
   const [countStarted, setCountStarted] = useState<number | false>(false);
+  const [activatable, setActivatable] = useState<Block[]>([]);
 
   const currentStageMaps = useMemo<MapType[]>(() => {
     return allMaps.filter((m) => m.stage === stage);
@@ -53,6 +54,9 @@ export default function GameScreen() {
   ];
 
   useEffect(() => {
+    const currentActivatable = (items: Block[]) => {
+      setActivatable(items);
+    };
     const interactable: Block[] = [];
     currentStageMaps.forEach((m) => {
       m.level?.forEach((row) => {
@@ -61,7 +65,7 @@ export default function GameScreen() {
           .forEach((col) => interactable.push(col));
       });
     });
-    console.log(interactable);
+    currentActivatable(interactable);
   }, [interactedBlocks]);
 
   const getBlock = (x: number, y: number) => {
@@ -151,7 +155,6 @@ export default function GameScreen() {
     <GameContext.Provider
       value={{
         mask,
-        tick,
         setMask,
         stage,
         stageUp,
@@ -163,6 +166,7 @@ export default function GameScreen() {
         setItemPos,
         resetAllItems,
         activateBlock,
+        activatable,
       }}
     >
       <div style={styles.menu}>

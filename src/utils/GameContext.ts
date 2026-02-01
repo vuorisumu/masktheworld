@@ -3,7 +3,6 @@ import type { Block, ItemType, MapType, MaskType } from "./types";
 
 interface GameContextType {
   mask: MaskType;
-  tick: number;
   setMask: (mask: MaskType) => void;
   stage: number;
   stageUp: () => void;
@@ -15,6 +14,7 @@ interface GameContextType {
   setItemPos: (id: number, x: number, y: number) => void;
   resetAllItems: () => void;
   activateBlock: (id: string) => void;
+  activatable?: Block[];
 }
 
 const defaultContext: GameContextType = {
@@ -30,7 +30,7 @@ const defaultContext: GameContextType = {
   },
   setItemPos: () => {},
   resetAllItems: () => {},
-  activateBlock: () => {}
+  activateBlock: () => {},
 };
 
 const GameContext = createContext<GameContextType>(defaultContext);
