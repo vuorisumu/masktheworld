@@ -1,7 +1,10 @@
 import { useAudioPlayer } from "react-use-audio-player";
 import { useAppContext } from "../utils/AppContext";
 import { MusicContext } from "./MusicContext";
-import { useEffect, type ReactNode } from "react";
+import { useCallback, useEffect, type ReactNode } from "react";
+import angry from "../assets/angry.mp3";
+import game from "../assets/game.mp3";
+import pipe from "../assets/pipe.wav";
 
 export function MusicProvider({ children }: { children: ReactNode }) {
   const { screen } = useAppContext();
@@ -9,16 +12,19 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const { load: sfx } = useAudioPlayer();
   const { load: music, isLoading: musicLoading } = useAudioPlayer();
 
-  const handleStart = (name: string) => {
-    music(name, {
-      initialVolume: 0.75,
-      autoplay: true,
-      loop: true
-    });
-  };
+  const handleStart = useCallback(
+    (name: string) => {
+      music(name, {
+        initialVolume: 0.75,
+        autoplay: true,
+        loop: true
+      });
+    },
+    [music]
+  );
 
   const playClick = () => {
-    sfx("/pipe.wav", {
+    sfx(pipe, {
       initialVolume: 1,
       autoplay: true
     });
@@ -27,16 +33,15 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     switch (screen) {
       case "menu":
-        handleStart("/angry.mp3");
+        handleStart(angry);
         break;
       case "game":
-        handleStart("/game.mp3");
+        handleStart(game);
         break;
       default:
-        stop();
         break;
     }
-  }, [screen]);
+  }, [screen, handleStart]);
   const play = () => {
     // play music
   };
