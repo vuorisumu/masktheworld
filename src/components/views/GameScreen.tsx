@@ -49,7 +49,18 @@ export default function GameScreen() {
   const getBlock = (x: number, y: number) => {
     const itemFound = currentStageItems.find((i) => i.x === x && i.y === y);
     const curr = currentMap[x][y];
-    const arr = ["button", "door", "cdoor"];
+    const arr = [
+      "spike1",
+      "spike2",
+      "cspike1",
+      "cspike2",
+      "button1",
+      "button2",
+      "cbutton1",
+      "cbutton2",
+      "door",
+      "cdoor",
+    ];
     let activated = false;
     if (arr.includes(curr.name)) {
       if (interactedBlocks.includes(curr.id)) activated = true;

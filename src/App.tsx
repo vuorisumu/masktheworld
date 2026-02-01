@@ -72,19 +72,71 @@ function App() {
                         fall: false,
                         activated: false
                       };
-                    case "*":
+                    // case "*":
+                    //   return { id, solid: false, name: "button", fall: false, activated: false };
+                    // case "^":
+                    //   return { id, solid: false, name: "cbutton", fall: false, activated: false };
+                    case "1":
                       return {
                         id,
                         solid: false,
-                        name: "button",
+                        name: "spike1",
                         fall: false,
                         activated: false
                       };
-                    case "^":
+                    case "2":
                       return {
                         id,
                         solid: false,
-                        name: "cbutton",
+                        name: "cspike1",
+                        fall: false,
+                        activated: false
+                      };
+                    case "I":
+                      return {
+                        id,
+                        solid: false,
+                        name: "button1",
+                        fall: false,
+                        activated: false
+                      };
+                    case "J":
+                      return {
+                        id,
+                        solid: false,
+                        name: "cbutton1",
+                        fall: false,
+                        activated: false
+                      };
+                    case "3":
+                      return {
+                        id,
+                        solid: false,
+                        name: "spike2",
+                        fall: false,
+                        activated: false
+                      };
+                    case "4":
+                      return {
+                        id,
+                        solid: false,
+                        name: "cspike2",
+                        fall: false,
+                        activated: false
+                      };
+                    case "N":
+                      return {
+                        id,
+                        solid: false,
+                        name: "button2",
+                        fall: false,
+                        activated: false
+                      };
+                    case "H":
+                      return {
+                        id,
+                        solid: false,
+                        name: "cbutton2",
                         fall: false,
                         activated: false
                       };
