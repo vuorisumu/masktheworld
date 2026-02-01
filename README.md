@@ -31,3 +31,19 @@
 `*` Button
 
 `^` Creepy button
+
+`1` Normal spikes [1]
+
+`2` Creepy spikes [1]
+
+`I` Normal button connected to [1]
+
+`J` Creepy button connected to [1]
+
+`3` Normal spikes [2]
+
+`4` Creepy spikes [2]
+
+`N` Normal button connected to [2]
+
+`H` Creepy button connected to [2]

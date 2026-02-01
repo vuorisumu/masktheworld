@@ -20,7 +20,7 @@ export default function GridBlock({ block, hasPlayer, size }: Props) {
     >
       <div style={{ position: "relative" }}>
         <img src={getBlockSprite(block.name, block.activated)} style={styles.image} />
-        {["button", "cbutton"].includes(block.name) && (
+        {["button1", "cbutton1", "button2", "cbutton2"].includes(block.name) && (
           <img
             src={getBlockSprite("btn")}
             style={{ ...styles.image, position: "absolute", top: 0, left: 0 }}
